@@ -20,9 +20,14 @@ def webhook(request):
     
     if request.method == "POST":
         Error.objects.create(error='OK').save()
+        print('tengo el post')
     
     try:
+        print('en el try')
         data = json.loads(request.body.decode('utf-8'))
+        print(data)
+        print(data)
+        print(data)
         if data['entry'][0]['changes'][0]['value']['messages'][0]['type']=='text':
             #EXTRAEMOS EL NUMERO DE TELEFONO Y EL MANSAJE
             telefonoCliente=data['entry'][0]['changes'][0]['value']['messages'][0]['from']
