@@ -36,6 +36,6 @@ def webhook(request):
             # Error.objects.create(error='No se pudo decodificar el JSON').save()
         return JsonResponse({"error": "Error al decodificar JSON"}, status=400)
 
-    Error.objects.create(error='OK')
+    Error.objects.create(error='OK').save()
 
     return HttpResponse("ACA")
