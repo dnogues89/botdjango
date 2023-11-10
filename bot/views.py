@@ -18,6 +18,9 @@ def webhook(request):
             # SI NO SON IGUALES RETORNAMOS UN MENSAJE DE ERROR
             return HttpResponse("Error de autentificacion.")
     
+    if request.method == "POST":
+        Error.objects.create(error='OK').save()
+    
     try:
         data = json.loads(request.body.decode('utf-8'))
         if data['entry'][0]['changes'][0]['value']['messages'][0]['type']=='text':
