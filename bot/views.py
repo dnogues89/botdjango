@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
-from .models import MensajesRecibidos
+from .models import MensajesRecibidos, Error
 
 import json
 
@@ -29,11 +29,13 @@ def webhook(request):
             idWA=data['entry'][0]['changes'][0]['value']['messages'][0]['id']
             #EXTRAEMOS EL TIEMPO DE WHATSAPP DEL ARRAY
             timestamp=data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
-            MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=telefonoCliente,telefono_receptor='baires')
+            MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=telefonoCliente,telefono_receptor='baires').save()
             
     except json.JSONDecodeError:
+        
+            # Error.objects.create(error='No se pudo decodificar el JSON').save()
         return JsonResponse({"error": "Error al decodificar JSON"}, status=400)
 
-    
-        
-    return HttpResponse("ACA ESOTY")
+    Error.objects.create(error='OK')
+
+    return HttpResponse("ACA")

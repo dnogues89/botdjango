@@ -8,3 +8,5 @@ class MensajesRecibidos(models.Model):
     telefono_cliente = models.CharField(max_length=100)
     telefono_receptor = models.CharField(max_length=100)
     
+class Error(models.Model):
+    error = models.TextField()
