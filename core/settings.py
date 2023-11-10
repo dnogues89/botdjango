@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-h4(876r1k3q#bo$h%*nhkzn(6n&6j2@%34)298s)w!3*8hw^g+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['fransibot.pythonanywhere.com']
 
 
 # Application definition
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bot',
 ]
 
 MIDDLEWARE = [
