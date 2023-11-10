@@ -1,12 +1,15 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from .models import MensajesRecibidos, Error
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 import json
 
 
 # Create your views here.
-
+@csrf_exempt
 def webhook(request):
     # SI HAY DATOS RECIBIDOS VIA GET
     if request.method == "GET":
