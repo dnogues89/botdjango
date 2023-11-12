@@ -65,3 +65,5 @@ def webhook(request):
             return JsonResponse({"error": "Error al decodificar JSON"}, status=400)
 
         Error.objects.create(error='OK').save()
+
+    return HttpResponse('Hola mundo')
