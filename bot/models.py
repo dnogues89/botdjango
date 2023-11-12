@@ -20,7 +20,10 @@ class Cliente(models.Model):
     contacto = models.DateTimeField(auto_now=True)
     
     def __str__(self) -> str:
-        return f'{self.nombre} | {self.telefono[3:]}'
+        try:
+            return f'{self.nombre} | {self.telefono[3:5]}-{self.telefono[5:9]}-{self.telefono[9:]}'
+        except:
+            return f'{self.nombre} | {str(self.telefono)[3:]}'
     
     class Meta:
         verbose_name = 'cliente'
