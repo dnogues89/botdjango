@@ -12,7 +12,7 @@ class MensajesRecibidos(models.Model):
     timestamp = models.IntegerField()
     telefono_cliente = models.CharField(max_length=100)
     telefono_receptor = models.CharField(max_length=100)
-    creado = models.DateTimeField(auto_created=True)
+    creado = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
         return self.telefono_cliente
