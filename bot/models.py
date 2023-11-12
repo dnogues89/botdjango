@@ -20,7 +20,7 @@ class Cliente(models.Model):
     contacto = models.DateTimeField(auto_now=True)
     
     def __str__(self) -> str:
-        return f''
+        return f'{self.nombre} | {self.telefono[3:]}'
     
     class Meta:
         verbose_name = 'cliente'
