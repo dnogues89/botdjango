@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
-from .models import MensajesRecibidos, Error,Key
+from .models import MensajesRecibidos, Error,Key, Cliente
 from django.views.decorators.csrf import csrf_exempt
 from . import services
 
@@ -42,21 +42,21 @@ def webhook(request):
         try:
             data = json.loads(request.body.decode('utf-8'))
             if data['entry'][0]['changes'][0]['value']['messages'][0]['type']=='text':
-                #EXTRAEMOS EL NUMERO DE TELEFONO Y EL MANSAJE
                 telefonoCliente=data['entry'][0]['changes'][0]['value']['messages'][0]['from']
-                #EXTRAEMOS EL TELEFONO DEL CLIENTE
                 mensaje=data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
-                #EXTRAEMOS EL ID DE WHATSAPP DEL ARRAY
                 idWA=data['entry'][0]['changes'][0]['value']['messages'][0]['id']
-                #EXTRAEMOS EL TIEMPO DE WHATSAPP DEL ARRAY
                 timestamp=data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
                 try:
                     MensajesRecibidos.objects.get(id_wa=idWA)
                 except:
-                    MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=telefonoCliente,telefono_receptor='baires').save()
-                    token = Key.objects.get(name='wap')
-                    data = services.text_Message('541166531292','Hola')
-                    services.enviar_Mensaje_whatsapp(token.token,token.url,data)
+                    try:
+                        cliente = Cliente.objects.get(telefono = telefonoCliente)
+                    except:
+                        cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0)
+                        MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=telefonoCliente,cliente=cliente,telefono_receptor='baires').save()
+                        token = Key.objects.get(name='wap')
+                        data = services.text_Message('541166531292','Hola')
+                        services.enviar_Mensaje_whatsapp(token.token,token.url,data)
                 
                 
         except json.JSONDecodeError:
