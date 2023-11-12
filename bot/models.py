@@ -2,8 +2,9 @@ from django.db import models
 
 # Create your models here.
 class Key(models.Model):
+    name = models.CharField(max_length=50)
     url=models.CharField(max_length=100)
-    token=models.CharField(max_length=100)
+    token=models.CharField(max_length=500)
 
 class MensajesRecibidos(models.Model):
     id_wa = models.CharField(max_length=100, unique=True)
