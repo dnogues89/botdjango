@@ -20,10 +20,7 @@ class Cliente(models.Model):
     contacto = models.DateTimeField(auto_now=True)
     
     def __str__(self) -> str:
-        try:
-            return f'{self.nombre} | {self.telefono[3:5]}-{self.telefono[5:9]}-{self.telefono[9:]}'
-        except:
-            return f'{self.nombre} | {str(self.telefono)[3:]}'
+        return f'{self.nombre} | {self.telefono}'
     
     class Meta:
         verbose_name = 'cliente'
@@ -42,6 +39,7 @@ class MensajesRecibidos(models.Model):
     telefono_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     telefono_receptor = models.CharField(max_length=100)
     creado = models.DateTimeField(auto_now_add=True)
+    json = models.JSONField(blank=True)
 
     def __str__(self) -> str:
         return self.telefono_cliente
