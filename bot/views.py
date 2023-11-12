@@ -50,10 +50,13 @@ def webhook(request):
                 idWA=data['entry'][0]['changes'][0]['value']['messages'][0]['id']
                 #EXTRAEMOS EL TIEMPO DE WHATSAPP DEL ARRAY
                 timestamp=data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
-                MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=telefonoCliente,telefono_receptor='baires').save()
-                token = Key.objects.get(name='wap')
-                data = services.text_Message(MensajesRecibidos.telefono_cliente,'Hola')
-                services.enviar_Mensaje_whatsapp(token.token,token.url,data)
+                try:
+                    MensajesRecibidos.objects.get(id_wa=idWA)
+                except:
+                    MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=telefonoCliente,telefono_receptor='baires').save()
+                    token = Key.objects.get(name='wap')
+                    data = services.text_Message(MensajesRecibidos.telefono_cliente,'Hola')
+                    services.enviar_Mensaje_whatsapp(token.token,token.url,data)
                 
                 
         except json.JSONDecodeError:
