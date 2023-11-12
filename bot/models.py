@@ -9,6 +9,7 @@ class Key(models.Model):
 
 class Error(models.Model):
     error = models.TextField()
+    json = models.JSONField()
     
 class Cliente(models.Model):
     telefono = models.IntegerField(unique=True)
