@@ -39,7 +39,6 @@ def webhook(request):
             return HttpResponse("Error de autentificacion.")
     
     if request.method == "POST":    
-        Error.objects.create(error='recibe',json=data)
         try:
             data = json.loads(request.body.decode('utf-8'))
             Error.objects.create(error='recibe',json=data).save()
