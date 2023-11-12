@@ -1,6 +1,10 @@
 from django.db import models
 
 # Create your models here.
+class Key(models.Model):
+    url=models.CharField(max_length=100)
+    token=models.CharField(max_length=100)
+
 class MensajesRecibidos(models.Model):
     id_wa = models.CharField(max_length=100, unique=True)
     mensaje = models.TextField()
@@ -32,9 +36,11 @@ class Cliente(models.Model):
         return f''
     
     class Meta:
-        verbose_name = 'mensaje'
-        verbose_name_plural = 'mensajes'
+        verbose_name = 'cliente'
+        verbose_name_plural = 'clientes'
     
 class Flow(models.Model):
     flow_id = models.IntegerField()
-    respuesta = models.TextField()
+    respuesta_ok = models.TextField()
+    next_flow = models.IntegerField(blank=True,null=True)
+    respuesta_nook = models.TextField(blank=True,null=True)

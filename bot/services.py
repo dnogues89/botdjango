@@ -22,10 +22,10 @@ def obtener_Mensaje_whatsapp(message):
     
     return text
 
-def enviar_Mensaje_whatsapp(data):
+def enviar_Mensaje_whatsapp(token,url,data):
     try:
-        whatsapp_token = sett.whatsapp_token
-        whatsapp_url = sett.whatsapp_url
+        whatsapp_token = token
+        whatsapp_url = url
         headers = {'Content-Type': 'application/json',
                    'Authorization': 'Bearer ' + whatsapp_token}
         print("se envia ", data)
