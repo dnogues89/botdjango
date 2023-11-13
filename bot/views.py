@@ -36,11 +36,12 @@ class ChatFlow():
             3:self.validate_numero(self.mensaje,3),
             4:self.validate_numero(self.mensaje,6),
             30:True,
+            50:True,
         }
         
         if hash_map[self.flow.flow_id]:
-            self.answer = self.flow.respuesta_ok
             self.update_cliente()
+            self.answer = self.flow.respuesta_ok
             self.answer = self.answer.replace('{self.cliente.nombre}',str(self.cliente.nombre)).replace('{self.cliente.telefono}',str(self.cliente.telefono)).replace('{self.cliente.email}',str(self.cliente.email))
             try:
                 self.answer = self.answer.replace('{self.cliente.nombre}',str(self.cliente.nombre)).replace('{self.cliente.telefono}',str(self.cliente.telefono)).replace('{self.cliente.email}',str(self.cliente.email)).replace("{modelos[int(self.mensaje)]['modelo']}",modelos[int(self.mensaje)]['modelo']).replace("{modelos[int(self.mensaje)]['ficha']}",modelos[int(self.mensaje)]['ficha'])
@@ -49,7 +50,7 @@ class ChatFlow():
             self.cliente.flow=self.flow.next_flow
             self.cliente.save()
         else:
-            self.answer = Flow.objects.get(next_flow=self.flow.flow_id).respuesta_nook
+            self.answer = Flow.objects.filter(next_flow=self.flow.flow_id)[0].respuesta_nook
 
               
     def update_cliente(self):
@@ -61,8 +62,9 @@ class ChatFlow():
             self.cliente.canal = self.mensaje
         if self.flow.flow_id == 3:
             self.cliente.modelo = modelos[int(self.mensaje)]['modelo']
-        if self.flow.flow_id == 4:
-            self.cliente.comentario = self.mensaje
+        if self.flow.flow_id == 50:
+            if self.cliente.comentario == None:
+                self.cliente.comentario = self.mensaje
 
 
     def validate_mail(self, correo):
