@@ -56,7 +56,7 @@ def webhook(request):
                             cliente = Cliente.objects.get(telefono = telefonoCliente)
                         except:
                             cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
-                        MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='baires').save()
+                        MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='baires',json=data).save()
                         token = Key.objects.get(name='wap')
                         data = services.text_Message('541166531292','Hola')
                         services.enviar_Mensaje_whatsapp(token.token,token.url,data)
