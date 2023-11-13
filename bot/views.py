@@ -58,7 +58,7 @@ def webhook(request):
             if data['entry'][0]['changes'][0]['value']['messages'][0]['type']!='text':
                 telefonoCliente=data['entry'][0]['changes'][0]['value']['messages'][0]['from']
                 telefonoCliente=f'54{str(telefonoCliente[2:])}'
-                mensaje='AUDIO'
+                mensaje='Imagen o Audio'
                 idWA=data['entry'][0]['changes'][0]['value']['messages'][0]['id']
                 timestamp=data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
                 try:

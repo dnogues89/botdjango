@@ -19,9 +19,7 @@ class Cliente(models.Model):
     modelo = models.CharField(max_length=50, blank=True,null=True)
     canal = models.CharField(max_length=50, blank=True,null=True)
     contacto = models.DateTimeField(auto_now=True)
-    
-    def __str__(self) -> str:
-        return f'{self.nombre} | {self.telefono}'
+
     
     class Meta:
         verbose_name = 'cliente'
@@ -41,9 +39,6 @@ class MensajesRecibidos(models.Model):
     telefono_receptor = models.CharField(max_length=100)
     creado = models.DateTimeField(auto_now_add=True)
     json = models.JSONField(blank=True)
-
-    def __str__(self) -> str:
-        return self.telefono_cliente
     
     class Meta:
         verbose_name = 'mensaje'
