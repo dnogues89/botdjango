@@ -48,8 +48,10 @@ class ChatFlow():
     def update_cliente(self):
         if self.flow == 1:
             self.cliente.name = self.mensaje
+            self.cliente.save()
         if self.flow == 2:
             self.cliente.email = self.mensaje
+            self.cliente.save()
         
         
     
