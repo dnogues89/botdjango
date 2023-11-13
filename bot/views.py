@@ -29,13 +29,13 @@ class ChatFlow():
         
     def get_respuesta(self):
         hash_map = {
-            0:[True,1],
+            0:True,
         }
         
         flow = Flow.objects.get(flow_id=self.cliente.flow)
-        if hash_map[flow.flow_id][0]:
+        if hash_map[flow.flow_id]:
             self.answer = flow.respuesta_ok
-            self.cliente.flow=hash_map[flow.flow_id][1]
+            self.cliente.flow=flow.next_flow
             
 
     def client_flow_by_status(self):
