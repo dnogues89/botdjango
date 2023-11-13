@@ -55,12 +55,20 @@ def webhook(request):
                             cliente = Cliente.objects.get(telefono = telefonoCliente)
                         except:
                             cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
-                            MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=telefonoCliente,cliente=cliente,telefono_receptor='baires').save()
-                            token = Key.objects.get(name='wap')
-                            data = services.text_Message('541166531292','Hola')
-                            services.enviar_Mensaje_whatsapp(token.token,token.url,data)
+                        MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=telefonoCliente,cliente=cliente,telefono_receptor='baires').save()
+                        token = Key.objects.get(name='wap')
+                        data = services.text_Message('541166531292','Hola')
+                        services.enviar_Mensaje_whatsapp(token.token,token.url,data)
+                        body = "¡Hola! 👋 Bienvenido a Bigdateros. ¿Cómo podemos ayudarte hoy?"
+                        footer = "Equipo Bigdateros"
+                        options = ["✅ servicios", "📅 agendar cita"]
+
+                        replyButtonData = services.buttonReply_Message('541166531292', options, body, footer, "sed1",idWA)
+                        replyReaction = services.replyReaction_Message('541166531292', idWA, "🫡")
+                        list.append(replyReaction)
+                        list.append(replyButtonData)
                 
-                
+                        
         except json.JSONDecodeError:
             
             Error.objects.create(error='No se pudo decodificar el JSON').save()
