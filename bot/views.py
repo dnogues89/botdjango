@@ -36,6 +36,7 @@ class ChatFlow():
         if hash_map[flow.flow_id]:
             self.answer = flow.respuesta_ok
             self.cliente.flow=flow.next_flow
+            self.cliente.save()
             
 
     def client_flow_by_status(self):
