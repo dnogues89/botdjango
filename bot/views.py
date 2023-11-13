@@ -61,7 +61,7 @@ class ChatFlow():
         if self.flow.flow_id == 22:
             if str(self.mensaje) != '1':
                 self.cliente.flow = 0
-                self.flow.flow_id = 0   
+                self.flow = Flow.objects.get(flow_id=0)
         if self.flow.flow_id == 3:
             self.cliente.canal = self.mensaje
         if self.flow.flow_id == 4:
