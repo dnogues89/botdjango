@@ -8,18 +8,15 @@ import re
 
 
 import json
-# def enviar_opciones():
-#     body = "¡Hola! 👋 Bienvenido a Bigdateros. ¿Cómo podemos ayudarte hoy?"
-#     footer = "Equipo Bigdateros"
-#     options = ["✅ servicios", "📅 agendar cita"]
 
-#     list = []
-#     replyButtonData = services.buttonReply_Message('541166531292', options, body, footer, "sed1",idWA)
-#     replyReaction = services.replyReaction_Message('541166531292', idWA, "🫡")
-#     list.append(replyReaction)
-#     list.append(replyButtonData)
-#     for item in list:
-#         services.enviar_Mensaje_whatsapp(token.token,token.url,item)
+modelos = {
+1:{'modelo':'Amarok','ficha':'\n*Motor 2.0l:* https://bit.ly/3npJSfV\n*Motor V6:* https://bit.ly/3Vr63ix'},
+2:{'modelo':'Taos','ficha':'http://bit.ly/3X4d49L'},
+3:{'modelo':'T-Cross','ficha':'https://bit.ly/3p9gf2U'},
+4:{'modelo':'Nivus','ficha':'https://bit.ly/422l5h1'},
+5:{'modelo':'Polo','ficha':'https://bit.ly/3P7xjBv'},
+6:{'modelo':'Tiguan','ficha':'https://bit.ly/3p0mZQB'},
+}
 
 class ChatFlow():
     def __init__(self, cliente, mensaje) -> None:
@@ -28,11 +25,17 @@ class ChatFlow():
         self.flow = Flow.objects.get(flow_id=self.cliente.flow)
         self.get_respuesta()
         
+
+    
     def get_respuesta(self):
         hash_map = {
             0:True,
             1:True,
             2:self.validate_mail(self.mensaje),
+            22:self.validate_numero(self.mensaje,2),
+            3:self.validate_numero(self.mensaje,3),
+            4:self.validate_numero(self.mensaje,6),
+            30:True,
         }
         
         if hash_map[self.flow.flow_id]:
@@ -40,6 +43,10 @@ class ChatFlow():
             self.answer = self.flow.respuesta_ok
             if self.flow.flow_id == 2:
                 self.answer = f"Como soy un 🤖... ¿Me podes confirmar si estan bien mis 📝?\n\n🏷️ *Nombre:* {self.cliente.nombre}\n📱 *Telefono:* {self.cliente.telefono}\n📧 *Mail:* {self.cliente.email}\n\n*Envía*\n1️⃣ Si es correcto\n2️⃣ Si queres modificar"
+            if self.flow.flow_id == 4:
+                self.answer = f"🦾 *Buena eleccion!* 🚙\n\nAca tenes mas info de *{modelos[int(self.mensaje)]['modelo']}:*\n{modelos[int(self.mensaje)]['ficha']}\n\n¿Cual es tu *consulta*? 🤔💬\nConfirmemos los datos para brindarte una mejor atencion ✅\n\n🏷️ *Nombre:* {self.cliente.nombre}\n📱 *Telefono:* {self.cliente.telefono}\n📧 *Mail:* {self.cliente.email}\n\nEnvia\n1️⃣ *Correcto*\n2️⃣ *Modificar*""
+            if self.flow.flow_id == 30:
+                self.answer = f"*Bienvenido de vuelta!* 🤗
             self.cliente.flow=self.flow.next_flow
             self.cliente.save()
         else:
@@ -47,20 +54,16 @@ class ChatFlow():
               
     def update_cliente(self):
         if self.flow.flow_id == 1:
-            self.cliente.name = self.mensaje
-            self.cliente.save()
+            self.cliente.nombre = self.mensaje
         if self.flow.flow_id == 2:
             self.cliente.email = self.mensaje
-            self.cliente.save()
-        
-        
-    
-    def length_check(self,param):
-        if len(self.msg) > param:
-            self.answer = f'🚫 Por favor que sean menos de {param} caracteres 🚫️'
-            return False
-        else:
-            return True
+        if self.flow.flow_id == 22:
+            self.cliente.canal = self.mensaje
+        if self.flow.flow_id == 3:
+            self.cliente.modelo = modelos[int(self.mensaje)]['modelo']
+        if self.flow.flow_id == 4:
+            self.cliente.comentario = self.mensaje
+
 
     def validate_mail(self, correo):
         patron = r'^[A-Za-z0-9\s\._%+-]+@[\w\.-]+\.\w+$'
@@ -69,10 +72,11 @@ class ChatFlow():
         else:
             return False
 
-    def validate_numero(self,numero):
+    def validate_numero(self,numero,numero_max):
         try:
             numero = int(numero)
-            return True
+            if numero <= numero_max:
+                return True
         except:
             return False
     

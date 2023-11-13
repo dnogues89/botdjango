@@ -18,6 +18,7 @@ class Cliente(models.Model):
     flow = models.IntegerField(blank=True,null=True)
     modelo = models.CharField(max_length=50, blank=True,null=True)
     canal = models.CharField(max_length=50, blank=True,null=True)
+    comentario = models.CharField(max_length=1000,blank=True,null=True)
     contacto = models.DateTimeField(auto_now=True)
 
     
