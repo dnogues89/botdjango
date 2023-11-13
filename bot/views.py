@@ -31,7 +31,8 @@ class ChatFlow():
     def get_respuesta(self):
         hash_map = {
             0:True,
-            1:self.validate_mail(self.mensaje),
+            1:True,
+            2:self.validate_mail(self.mensaje),
         }
         
         if hash_map[self.flow.flow_id]:
