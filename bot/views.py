@@ -46,10 +46,10 @@ class ChatFlow():
             self.answer = self.flow.respuesta_nook
               
     def update_cliente(self):
-        if self.flow == 1:
+        if self.flow.flow_id == 1:
             self.cliente.name = self.mensaje
             self.cliente.save()
-        if self.flow == 2:
+        if self.flow.flow_id == 2:
             self.cliente.email = self.mensaje
             self.cliente.save()
         
