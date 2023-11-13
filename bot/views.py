@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
-from .models import MensajesRecibidos, Error,Key, Cliente
+from .models import MensajesRecibidos, Error,Key, Cliente, Flow
 from django.views.decorators.csrf import csrf_exempt
 from . import services
+import re
 
 
 
@@ -20,6 +21,69 @@ import json
 #     for item in list:
 #         services.enviar_Mensaje_whatsapp(token.token,token.url,item)
 
+class ChatFlow():
+    def __init__(self, cliente, mensaje) -> None:
+        self.cliente = cliente
+        self.mensaje = mensaje
+        self.get_respuesta()
+        
+    def get_respuesta(self):
+        hash_map = {
+            0:[True,1],
+        }
+        
+        flow = Flow.objects.get(flow_id=self.cliente.flow)
+        if hash_map[flow.flow_id][0]:
+            self.answer = flow.respuesta_ok
+            self.cliente.flow=hash_map[flow.flow_id][1]
+            
+
+    def client_flow_by_status(self):
+        if self.flow == None or self.status == 0:
+            try:
+                self.repo.insert_new_client(self.client,self.timestamp)
+            except:
+                pass
+
+            try:
+                modelo = self.msg.split('|')[-1].split('-')[0]
+                self.repo.update_client_modelo(self.client,modelo)
+                comentario = self.msg.split('|')
+                comentario.pop(2)
+                print(comentario)
+                comentario = ",".join(comentario)
+                print(comentario)
+                self.repo.update_client_comentario(self.client,comentario)
+            except:
+                pass
+
+            self.repo.update_client_canal(self.client,3)
+            self.repo.update_client_status(self.client,1,self.timestamp)
+            self.answer = '🏡¡Hola! Bienvenido a *Espasa AUTO AHORRO* 🚗\n\nUn Asesor Comercial se pondrá en contacto con vos. 👨‍💼\nMientras tanto, te pedimos que nos respondas estas *preguntas* para darte la mejor atención. 🤔\nEn caso que lo necesites, solicitanos una videollamada y te brindamos asesoramiento 100% virtual. 🤳\n*Muchas gracias*\n\n🏷️ ¿Cuál es tu nombre? 🏷️'
+
+        
+
+    def length_check(self,param):
+        if len(self.msg) > param:
+            self.answer = f'🚫 Por favor que sean menos de {param} caracteres 🚫️'
+            return False
+        else:
+            return True
+
+    def validate_mail(self, correo):
+        patron = r'^[A-Za-z0-9\s\._%+-]+@[\w\.-]+\.\w+$'
+        if re.match(patron, correo):
+            return True
+        else:
+            return False
+
+    def validate_numero(self,numero):
+        try:
+            numero = int(numero)
+            return True
+        except:
+            return False
+    
 def procesar_mensaje(body):
     try:
         entry = body['entry'][0]
@@ -87,8 +151,10 @@ def webhook(request):
                             cliente = Cliente.objects.get(telefono = telefonoCliente)
                         except:
                             cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
+                        
                         MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='baires',json=data).save()
-                        data = services.text_Message('541166531292','Si no es audio')
+                        chat = ChatFlow(cliente,mensaje)
+                        data = services.text_Message(chat.cliente.telefono,chat.answer)
                         services.enviar_Mensaje_whatsapp(token.token,token.url,data)             
                         
         except json.JSONDecodeError:
