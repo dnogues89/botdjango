@@ -25,45 +25,31 @@ class ChatFlow():
     def __init__(self, cliente, mensaje) -> None:
         self.cliente = cliente
         self.mensaje = mensaje
+        self.flow = Flow.objects.get(flow_id=self.cliente.flow)
         self.get_respuesta()
         
     def get_respuesta(self):
         hash_map = {
             0:True,
+            1:self.validate_mail(self.mensaje),
         }
         
-        flow = Flow.objects.get(flow_id=self.cliente.flow)
-        if hash_map[flow.flow_id]:
-            self.answer = flow.respuesta_ok
-            self.cliente.flow=flow.next_flow
+        if hash_map[self.flow.flow_id]:
+            self.update_cliente()
+            self.answer = self.flow.respuesta_ok
+            self.cliente.flow=self.flow.next_flow
             self.cliente.save()
-            
-
-    def client_flow_by_status(self):
-        if self.flow == None or self.status == 0:
-            try:
-                self.repo.insert_new_client(self.client,self.timestamp)
-            except:
-                pass
-
-            try:
-                modelo = self.msg.split('|')[-1].split('-')[0]
-                self.repo.update_client_modelo(self.client,modelo)
-                comentario = self.msg.split('|')
-                comentario.pop(2)
-                print(comentario)
-                comentario = ",".join(comentario)
-                print(comentario)
-                self.repo.update_client_comentario(self.client,comentario)
-            except:
-                pass
-
-            self.repo.update_client_canal(self.client,3)
-            self.repo.update_client_status(self.client,1,self.timestamp)
-            self.answer = '🏡¡Hola! Bienvenido a *Espasa AUTO AHORRO* 🚗\n\nUn Asesor Comercial se pondrá en contacto con vos. 👨‍💼\nMientras tanto, te pedimos que nos respondas estas *preguntas* para darte la mejor atención. 🤔\nEn caso que lo necesites, solicitanos una videollamada y te brindamos asesoramiento 100% virtual. 🤳\n*Muchas gracias*\n\n🏷️ ¿Cuál es tu nombre? 🏷️'
-
+        else:
+            self.answer = self.flow.respuesta_nook
+              
+    def update_cliente(self):
+        if self.flow == 1:
+            self.cliente.name = self.mensaje
+        if self.flow == 2:
+            self.cliente.email = self.mensaje
         
-
+        
+    
     def length_check(self,param):
         if len(self.msg) > param:
             self.answer = f'🚫 Por favor que sean menos de {param} caracteres 🚫️'
