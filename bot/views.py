@@ -39,14 +39,16 @@ class ChatFlow():
         }
         
         if hash_map[self.flow.flow_id]:
-            self.update_cliente()
             self.answer = self.flow.respuesta_ok
-            if self.flow.flow_id == 2:
-                self.answer = f"Como soy un 🤖... ¿Me podes confirmar si estan bien mis 📝?\n\n🏷️ *Nombre:* {self.cliente.nombre}\n📱 *Telefono:* {self.cliente.telefono}\n📧 *Mail:* {self.cliente.email}\n\n*Envía*\n1️⃣ Si es correcto\n2️⃣ Si queres modificar"
+            self.update_cliente()
+            self.answer = self.answer.replace('{self.cliente.nombre}','{self.cliente.nombre}').replace('{self.cliente.telefono}','{self.cliente.telefono}').replace('{self.cliente.email}','{self.cliente.email}')
+            # if self.flow.flow_id == 2:
+            #     self.answer = f"Como soy un 🤖... ¿Me podes confirmar si estan bien mis 📝?\n\n🏷️ *Nombre:* {self.cliente.nombre}\n📱 *Telefono:* {self.cliente.telefono}\n📧 *Mail:* {self.cliente.email}\n\n*Envía*\n1️⃣ Si es correcto\n2️⃣ Si queres modificar"
             if self.flow.flow_id == 4:
-                self.answer = f"🦾 *Buena eleccion!* 🚙\n\nAca tenes mas info de *{modelos[int(self.mensaje)]['modelo']}:*\n{modelos[int(self.mensaje)]['ficha']}\n\n¿Cual es tu *consulta*? 🤔💬\nConfirmemos los datos para brindarte una mejor atencion ✅\n\n🏷️ *Nombre:* {self.cliente.nombre}\n📱 *Telefono:* {self.cliente.telefono}\n📧 *Mail:* {self.cliente.email}\n\nEnvia\n1️⃣ *Correcto*\n2️⃣ *Modificar*""
+                self.answer = f"🦾 *Buena eleccion!* 🚙\n\nAca tenes mas info de *{modelos[int(self.mensaje)]['modelo']}:*\n{modelos[int(self.mensaje)]['ficha']}\n\n¿Cual es tu *consulta*? 🤔💬"
             if self.flow.flow_id == 30:
-                self.answer = f"*Bienvenido de vuelta!* 🤗
+                self.answer = f"*Bienvenido de vuelta!* 🤗\nConfirmemos los datos para brindarte una mejor atencion ✅\n\n🏷️ *Nombre:* {self.cliente.nombre}\n📱 *Telefono:* {self.cliente.telefono}\n📧 *Mail:* {self.cliente.email}\n\nEnvia\n1️⃣ *Correcto*\n2️⃣ *Modificar*"
+            
             self.cliente.flow=self.flow.next_flow
             self.cliente.save()
         else:
