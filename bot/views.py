@@ -70,7 +70,7 @@ def webhook(request):
                         list.append(replyReaction)
                         list.append(replyButtonData)
                         for item in list:
-                            services.enviar_Mensaje_whatsapp(item)
+                            services.enviar_Mensaje_whatsapp(token.token,token.url,item)
                 
                         
         except json.JSONDecodeError:
