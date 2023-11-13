@@ -59,7 +59,7 @@ class ChatFlow():
         if self.flow.flow_id == 2:
             self.cliente.email = self.mensaje
         if self.flow.flow_id == 22:
-            if self.mensaje != '1':
+            if str(self.mensaje) != '1':
                 self.cliente.flow = 0
                 self.flow.flow_id = 0   
         if self.flow.flow_id == 3:
