@@ -39,8 +39,9 @@ def webhook(request):
             return HttpResponse("Error de autentificacion.")
     
     if request.method == "POST":    
+        data = json.loads(request.body.decode('utf-8'))
         try:
-            data = json.loads(request.body.decode('utf-8'))
+            
             Error.objects.create(error='recibe',json=data).save()
             if 'messages' in data['entry'][0]['changes'][0]['value']:
                 if data['entry'][0]['changes'][0]['value']['messages'][0]['type']=='text':
@@ -74,6 +75,6 @@ def webhook(request):
             Error.objects.create(error='No se pudo decodificar el JSON').save()
             return JsonResponse({"error": "Error al decodificar JSON"}, status=400)
 
-        Error.objects.create(error='OK').save()
+        Error.objects.create(error='OK',json=data).save()
 
     return HttpResponse('Hola mundo')
