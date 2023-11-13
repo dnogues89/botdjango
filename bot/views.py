@@ -57,7 +57,7 @@ def webhook(request):
             
             if data['entry'][0]['changes'][0]['value']['messages'][0]['type']!='text':
                 telefonoCliente=data['entry'][0]['changes'][0]['value']['messages'][0]['from']
-                telefonoCliente=f'54{str(telefonoCliente[2:])}'
+                telefonoCliente=f'54{str(telefonoCliente[3:])}'
                 mensaje='Imagen o Audio'
                 idWA=data['entry'][0]['changes'][0]['value']['messages'][0]['id']
                 timestamp=data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
@@ -76,7 +76,7 @@ def webhook(request):
             if 'messages' in data['entry'][0]['changes'][0]['value']:
                 if data['entry'][0]['changes'][0]['value']['messages'][0]['type']=='text':
                     telefonoCliente=data['entry'][0]['changes'][0]['value']['messages'][0]['from']
-                    telefonoCliente=f'54{str(telefonoCliente[2:])}'
+                    telefonoCliente=f'54{str(telefonoCliente[3:])}'
                     mensaje=data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
                     idWA=data['entry'][0]['changes'][0]['value']['messages'][0]['id']
                     timestamp=data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
