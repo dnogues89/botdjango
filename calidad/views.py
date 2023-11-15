@@ -3,9 +3,11 @@ from django.http import HttpResponse
 import json
 from bot.models import Key
 from bot import services
+from .models import Encuesta
 
 # Create your views here.
-def realizar_encuesta(request,encuesta): 
+def realizar_encuesta(request): 
+    encuesta = Encuesta.objects.get(pk=1)
     data = {
    "messaging_product": "whatsapp",
    "to": encuesta.cliente.telefono,
