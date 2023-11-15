@@ -8,7 +8,8 @@ from .models import Encuesta
 # Create your views here.
 def realizar_encuesta(request): 
     encuesta = Encuesta.objects.get(pk=1)
-    data = {
+    data = json.dumps(
+    {
    "messaging_product": "whatsapp",
    "to": encuesta.cliente.telefono,
    "type": "template",
@@ -49,8 +50,9 @@ def realizar_encuesta(request):
            }
        ]
    }
-}
+})
     print(data)
+    
     token = Key.objects.get(name='wap')
     resp = services.enviar_Mensaje_whatsapp(token.token,token.url,data)
     return HttpResponse(f'{str(resp)} - {str(data)} ')
