@@ -5,6 +5,8 @@ from bot.models import Key
 from bot import services
 from .models import Encuesta
 
+from datetime import date
+
 # Create your views here.
 def realizar_encuesta(request): 
     encuesta = Encuesta.objects.get(pk=1)
@@ -29,7 +31,7 @@ def realizar_encuesta(request):
                    },
                    {
                        "type": "text",
-                       "text": encuesta.entrega
+                       "text": str(encuesta.entrega.strftime("%d-%m-%Y"))
                    },
                    {
                        "type": "text",
