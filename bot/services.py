@@ -36,7 +36,7 @@ def enviar_Mensaje_whatsapp(token,url,data):
         if response.status_code == 200:
             return 'mensaje enviado', 200
         else:
-            return 'error al enviar mensaje', response.status_code, response
+            return 'error al enviar mensaje', response.status_code, response.text
     except Exception as e:
         return e,403
     
