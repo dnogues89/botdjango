@@ -50,6 +50,7 @@ def realizar_encuesta(request):
        ]
    }
 }
+    print(data)
     token = Key.objects.get(name='wap')
-    services.enviar_Mensaje_whatsapp(token.token,token.url,data)
-    return HttpResponse('Hola mundo')
+    resp = services.enviar_Mensaje_whatsapp(token.token,token.url,data)
+    return HttpResponse(str(resp))
