@@ -9,7 +9,7 @@ from .models import Encuesta
 def realizar_encuesta(request): 
     encuesta = Encuesta.objects.get(pk=1)
     data = json.dumps(
-    {
+            {
    "messaging_product": "whatsapp",
    "to": encuesta.cliente.telefono,
    "type": "template",
@@ -50,7 +50,8 @@ def realizar_encuesta(request):
            }
        ]
    }
-})
+}
+    )
     print(data)
     
     token = Key.objects.get(name='wap')
