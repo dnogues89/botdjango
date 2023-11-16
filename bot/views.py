@@ -135,7 +135,7 @@ class ChatEncuesta():
             footer = "Calidad Espasa"
             options = ["⭐​", "⭐​⭐​","⭐​⭐​⭐​","⭐​⭐​⭐​⭐​","⭐​⭐​⭐​⭐​⭐​"]
 
-            replyButtonData = services.buttonReply_Message(self.cliente.telefono, options, body, footer, "sed1",1)
+            replyButtonData = services.listReply_Message(self.cliente.telefono, options, body, footer, "sed1",1)
             list.append(replyButtonData)
             for item in list:
                 envio = services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,item)       
