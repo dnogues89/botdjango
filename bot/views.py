@@ -107,11 +107,17 @@ def procesar_mensaje(body):
 class ChatEncuesta():
     def __init__(self,encuesta,mensaje) -> None:
         self.cliente = encuesta.cliente
-        self.mensaje = procesar_mensaje(mensaje)
+        try:
+            self.id_wa_enviado = mensaje["entry"][0]['changes'][0]['value']['messages'][0]['context']['id']
+            self.mensaje = len(mensaje["entry"][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['title'])
+        except:
+            pass
         self.encuesta = encuesta
         self.token = Key.objects.get(name='wap')
         self.get_respuesta()
         self.enviar_mensaje()
+    
+
     
     def get_respuesta(self):
         hash_map = {
@@ -124,7 +130,7 @@ class ChatEncuesta():
         }
         
         self.answer = hash_map[self.encuesta.flow][0]
-        self.respuuesta_1 = self.mensaje
+        self.respuesta_1 = self.mensaje
         self.encuesta.flow = int(self.encuesta.flow) + 1
         self.encuesta.save()
 
