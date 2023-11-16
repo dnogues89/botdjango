@@ -178,6 +178,16 @@ def webhook(request):
                     
                     try:
                         encuesta = Encuesta.objects.get(cliente=cliente)
+                        print()
+                        print()
+                        print()
+                        print()
+                        print(encuesta)
+                        print(encuesta.__dict__)
+                        print()
+                        print()
+                        print()
+                        print()
                         if int(encuesta.flow) <=5:
                             ChatEncuesta(encuesta,data)
                     except:                
