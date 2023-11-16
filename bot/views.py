@@ -180,13 +180,11 @@ def webhook(request):
                         encuesta = Encuesta.objects.get(cliente=cliente)
                         if encuesta.flow <=5:
                             ChatEncuesta(encuesta,data)
-                    except:
-                        pass
-                    
-                    respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
-                    data = services.text_Message(telefonoCliente,respuesta)
-                    services.enviar_Mensaje_whatsapp(token.token,token.url,data)
-                    
+                    except:                
+                        respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
+                        data = services.text_Message(telefonoCliente,respuesta)
+                        services.enviar_Mensaje_whatsapp(token.token,token.url,data)
+                        
         try:  
             if 'messages' in data['entry'][0]['changes'][0]['value']:
                 if data['entry'][0]['changes'][0]['value']['messages'][0]['type']=='text':
