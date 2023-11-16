@@ -110,6 +110,8 @@ class ChatEncuesta():
         self.mensaje = procesar_mensaje(mensaje)
         self.encuesta = encuesta
         self.token = Key.objects.get(name='wap')
+        self.get_respuesta()
+        self.enviar_mensaje()
     
     def get_respuesta(self):
         hash_map = {
@@ -178,16 +180,7 @@ def webhook(request):
                     
                     try:
                         encuesta = Encuesta.objects.get(cliente=cliente)
-                        print()
-                        print()
-                        print()
-                        print()
-                        print(encuesta)
-                        print(encuesta.__dict__)
-                        print()
-                        print()
-                        print()
-                        print()
+
                         if int(encuesta.flow) <=5:
                             ChatEncuesta(encuesta,data)
                     except:                
