@@ -122,8 +122,8 @@ class ChatEncuesta():
         }
         
         self.answer = hash_map[self.encuesta.flow][0]
-        hash_map[self.encuesta.flow][1] = self.mensaje
-        self.encuesta.flow = self.encuesta.flow + 1
+        self.respuuesta_1 = self.mensaje
+        self.encuesta.flow = int(self.encuesta.flow) + 1
         self.encuesta.save()
 
     def enviar_mensaje(self):
