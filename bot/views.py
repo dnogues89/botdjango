@@ -141,7 +141,8 @@ class ChatEncuesta():
                 services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,item)
         else:
             data = services.text_Message(self.cliente.telefono,self.answer)
-            services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,data)        
+            envio = services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,data)        
+            print(envio)
         
     
 
