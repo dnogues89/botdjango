@@ -138,7 +138,8 @@ class ChatEncuesta():
             replyButtonData = services.buttonReply_Message(self.cliente.telefono, options, body, footer, "sed1",1)
             list.append(replyButtonData)
             for item in list:
-                services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,item)
+                envio = services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,item)       
+                print(envio)
         else:
             data = services.text_Message(self.cliente.telefono,self.answer)
             envio = services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,data)        
