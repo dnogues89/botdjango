@@ -178,7 +178,7 @@ def webhook(request):
                     
                     try:
                         encuesta = Encuesta.objects.get(cliente=cliente)
-                        if encuesta.flow <=5:
+                        if int(encuesta.flow) <=5:
                             ChatEncuesta(encuesta,data)
                     except:                
                         respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
