@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 from . import services
 import re
 
+from calidad.models import Encuesta
 
 
 import json
@@ -97,11 +98,50 @@ def procesar_mensaje(body):
         contacts = value['contacts'][0]
         name = contacts['profile']['name']
         text = services.obtener_Mensaje_whatsapp(message)
-        return 'procesado'
+        return text
 
     except Exception as e:
         return 'No procesado' + str(e)
 
+
+class ChatEncuesta():
+    def __init__(self,encuesta,mensaje) -> None:
+        self.cliente = encuesta.cliente
+        self.mensaje = procesar_mensaje(mensaje)
+        self.encuesta = encuesta
+        self.token = Key.objects.get(name='wap')
+    
+    def get_respuesta(self):
+        hash_map = {
+            0:[self.encuesta.pregunta_1,""],
+            1:[self.encuesta.pregunta_2,self.encuesta.respuesta_1],
+            2:[self.encuesta.pregunta_3,self.encuesta.respuesta_2],
+            3:[self.encuesta.pregunta_4,self.encuesta.respuesta_3],
+            4:[self.encuesta.pregunta_5,self.encuesta.respuesta_4],
+            5:['Muchas gracias',self.encuesta.respuesta_5],
+        }
+        
+        self.answer = hash_map[self.encuesta.flow][0]
+        hash_map[self.encuesta.flow][1] = self.mensaje
+        self.encuesta.flow = self.encuesta.flow + 1
+        self.encuesta.save()
+
+    def enviar_mensaje(self):
+        if self.encuesta.flow < 5:
+            list = []
+            body = self.answer
+            footer = "Calidad Espasa"
+            options = ["⭐​", "⭐​⭐​","⭐​⭐​⭐​","⭐​⭐​⭐​⭐​","⭐​⭐​⭐​⭐​⭐​"]
+
+            replyButtonData = services.buttonReply_Message(self.cliente.telefono, options, body, footer, "sed1",1)
+            list.append(replyButtonData)
+            for item in list:
+                services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,item)
+        else:
+            data = services.text_Message(self.cliente.telefono,self.answer)
+            services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,data)        
+        
+    
 
 # Create your views here.
 @csrf_exempt
@@ -135,9 +175,18 @@ def webhook(request):
                     except:
                         cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
                     MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='baires',json=data).save()
+                    
+                    try:
+                        encuesta = Encuesta.objects.get(cliente=cliente)
+                        if encuesta.flow <=5:
+                            ChatEncuesta(encuesta,data)
+                    except:
+                        pass
+                    
                     respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
                     data = services.text_Message(telefonoCliente,respuesta)
                     services.enviar_Mensaje_whatsapp(token.token,token.url,data)
+                    
         try:  
             if 'messages' in data['entry'][0]['changes'][0]['value']:
                 if data['entry'][0]['changes'][0]['value']['messages'][0]['type']=='text':
