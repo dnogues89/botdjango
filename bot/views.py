@@ -11,12 +11,12 @@ from calidad.models import Encuesta
 import json
 
 modelos = {
-1:{'modelo':'Amarok','ficha':'\n*Motor 2.0l:* https://bit.ly/3npJSfV\n*Motor V6:* https://bit.ly/3Vr63ix'},
-2:{'modelo':'Taos','ficha':'http://bit.ly/3X4d49L'},
-3:{'modelo':'T-Cross','ficha':'https://bit.ly/3p9gf2U'},
-4:{'modelo':'Nivus','ficha':'https://bit.ly/422l5h1'},
-5:{'modelo':'Polo','ficha':'https://bit.ly/3P7xjBv'},
-6:{'modelo':'Tiguan','ficha':'https://bit.ly/3p0mZQB'},
+1:{'modelo':'Alaskan','ficha':'https://tinyurl.com/yu9bb7r2'},
+2:{'modelo':'Oroch','ficha':'https://tinyurl.com/ymm6s7by'},
+3:{'modelo':'Kangoo','ficha':'https://tinyurl.com/ynpot88c'},
+4:{'modelo':'Stepway','ficha':'https://tinyurl.com/ynjyrnaq'},
+5:{'modelo':'Sandero','ficha':'https://tinyurl.com/ywkl78pg'},
+6:{'modelo':'Logan','ficha':'https://tinyurl.com/yow85svy'},
 }
 
 class ChatFlow():
