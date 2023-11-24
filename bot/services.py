@@ -28,7 +28,6 @@ def enviar_Mensaje_whatsapp(token,url,data):
         whatsapp_url = url
         headers = {'Content-Type': 'application/json',
                    'Authorization': 'Bearer ' + whatsapp_token}
-        print("se envia ", data)
         response = requests.post(whatsapp_url, 
                                  headers=headers, 
                                  data=data)
@@ -38,7 +37,7 @@ def enviar_Mensaje_whatsapp(token,url,data):
         else:
             return 'error al enviar mensaje', response.status_code, response.text
     except Exception as e:
-        return e,403
+        return f"'no se envia' {e}"
     
 def text_Message(number,text):
     data = json.dumps(
