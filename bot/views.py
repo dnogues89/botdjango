@@ -203,4 +203,4 @@ def clientes_abandonados(request):
         
     #     cliente.save()
     
-    return HttpResponse(f"Clientes:{clientes}\nTIMEZONE {datetime.now()} delta {datetime.now() + timedelta(minutes=10)}\n Abandonados: {clientes_filtrados}")
+    return HttpResponse(f"Clientes:{clientes[0].contacto}\nTIMEZONE {datetime.now()} delta {datetime.now() + timedelta(minutes=10)}\n Abandonados: {clientes_filtrados}")
