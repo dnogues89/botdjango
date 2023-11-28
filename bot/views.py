@@ -103,56 +103,6 @@ def procesar_mensaje(body):
     except Exception as e:
         return 'No procesado' + str(e)
 
-
-class ChatEncuesta():
-    def __init__(self,encuesta,mensaje) -> None:
-        self.cliente = encuesta.cliente
-        try:
-            self.id_wa_enviado = mensaje["entry"][0]['changes'][0]['value']['messages'][0]['context']['id']
-            self.mensaje = len(mensaje["entry"][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['title'])
-        except:
-            pass
-        self.encuesta = encuesta
-        self.token = Key.objects.get(name='wap')
-        self.get_respuesta()
-        self.enviar_mensaje()
-    
-
-    
-    def get_respuesta(self):
-        hash_map = {
-            0:[self.encuesta.pregunta_1,""],
-            1:[self.encuesta.pregunta_2,self.encuesta.respuesta_1],
-            2:[self.encuesta.pregunta_3,self.encuesta.respuesta_2],
-            3:[self.encuesta.pregunta_4,self.encuesta.respuesta_3],
-            4:[self.encuesta.pregunta_5,self.encuesta.respuesta_4],
-            5:['Muchas gracias',self.encuesta.respuesta_5],
-        }
-        
-        self.answer = hash_map[self.encuesta.flow][0]
-        self.respuesta_1 = self.mensaje
-        self.encuesta.flow = int(self.encuesta.flow) + 1
-        self.encuesta.save()
-
-    def enviar_mensaje(self):
-        if self.encuesta.flow < 5:
-            list = []
-            body = self.answer
-            footer = "Calidad Espasa"
-            options = ["⭐​", "⭐​⭐​","⭐​⭐​⭐​","⭐​⭐​⭐​⭐​","⭐​⭐​⭐​⭐​⭐​"]
-
-            replyButtonData = services.listReply_Message(self.cliente.telefono, options, body, footer, "sed1",1)
-            list.append(replyButtonData)
-            for item in list:
-                envio = services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,item)       
-                print(envio)
-        else:
-            data = services.text_Message(self.cliente.telefono,self.answer)
-            envio = services.enviar_Mensaje_whatsapp(self.token.token,self.token.url,data)        
-            print(envio)
-        
-    
-
 # Create your views here.
 @csrf_exempt
 def webhook(request):
@@ -169,40 +119,14 @@ def webhook(request):
     if request.method == "POST":    
         data = json.loads(request.body.decode('utf-8'))
         token = Key.objects.get(name='wap')
-        if 'messages' in data['entry'][0]['changes'][0]['value']:
-            
-            if data['entry'][0]['changes'][0]['value']['messages'][0]['type']!='text':
-                telefonoCliente=data['entry'][0]['changes'][0]['value']['messages'][0]['from']
-                telefonoCliente=f'54{str(telefonoCliente[3:])}'
-                mensaje='Imagen o Audio'
-                idWA=data['entry'][0]['changes'][0]['value']['messages'][0]['id']
-                timestamp=data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
-                try:
-                    MensajesRecibidos.objects.get(id_wa=idWA)
-                except:
-                    try:
-                        cliente = Cliente.objects.get(telefono = telefonoCliente)
-                    except:
-                        cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
-                    MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='baires',json=data).save()
-                    
-                    try:
-                        encuesta = Encuesta.objects.get(cliente=cliente)
-
-                        if int(encuesta.flow) <=5:
-                            ChatEncuesta(encuesta,data)
-                    except:                
-                        respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
-                        data = services.text_Message(telefonoCliente,respuesta)
-                        envio = services.enviar_Mensaje_whatsapp(token.token,token.url,data)
-                        print(envio)
-                        
-        try:  
+        
+        if data["entry"][0]["changes"][0]['value']['metadata']['phone_number_id'] == token.id_wap:
+        
             if 'messages' in data['entry'][0]['changes'][0]['value']:
-                if data['entry'][0]['changes'][0]['value']['messages'][0]['type']=='text':
+                if data['entry'][0]['changes'][0]['value']['messages'][0]['type']!='text':
                     telefonoCliente=data['entry'][0]['changes'][0]['value']['messages'][0]['from']
                     telefonoCliente=f'54{str(telefonoCliente[3:])}'
-                    mensaje=data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
+                    mensaje='Imagen o Audio'
                     idWA=data['entry'][0]['changes'][0]['value']['messages'][0]['id']
                     timestamp=data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
                     try:
@@ -212,19 +136,40 @@ def webhook(request):
                             cliente = Cliente.objects.get(telefono = telefonoCliente)
                         except:
                             cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
-                        
                         MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='baires',json=data).save()
-                        chat = ChatFlow(cliente,mensaje)
-                        data = services.text_Message(chat.cliente.telefono,chat.answer)
-                        envio = services.enviar_Mensaje_whatsapp(token.token,token.url,data)             
-                        print(envio)
+                                
+                        respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
+                        data = services.text_Message(telefonoCliente,respuesta)
+                        envio = services.enviar_Mensaje_whatsapp(token.token,token.url,data)
                         
-        except json.JSONDecodeError:
-            
-            Error.objects.create(error='No se pudo decodificar el JSON').save()
-            return JsonResponse({"error": "Error al decodificar JSON"}, status=400)
+            try:  
+                if 'messages' in data['entry'][0]['changes'][0]['value']:
+                    if data['entry'][0]['changes'][0]['value']['messages'][0]['type']=='text':
+                        telefonoCliente=data['entry'][0]['changes'][0]['value']['messages'][0]['from']
+                        telefonoCliente=f'54{str(telefonoCliente[3:])}'
+                        mensaje=data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
+                        idWA=data['entry'][0]['changes'][0]['value']['messages'][0]['id']
+                        timestamp=data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
+                        try:
+                            MensajesRecibidos.objects.get(id_wa=idWA)
+                        except:
+                            try:
+                                cliente = Cliente.objects.get(telefono = telefonoCliente)
+                            except:
+                                cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
+                            
+                            MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='baires',json=data).save()
+                            chat = ChatFlow(cliente,mensaje)
+                            data = services.text_Message(chat.cliente.telefono,chat.answer)
+                            envio = services.enviar_Mensaje_whatsapp(token.token,token.url,data)             
+                            print(envio)
+                            
+            except json.JSONDecodeError:
+                
+                Error.objects.create(error='No se pudo decodificar el JSON').save()
+                return JsonResponse({"error": "Error al decodificar JSON"}, status=400)
 
-        Error.objects.create(error='OK',json=data).save()
+            Error.objects.create(error='OK',json=data).save()
 
     return HttpResponse('Hola mundo')
 

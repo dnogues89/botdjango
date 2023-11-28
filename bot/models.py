@@ -5,6 +5,7 @@ class Key(models.Model):
     name = models.CharField(max_length=50)
     url=models.CharField(max_length=100)
     token=models.CharField(max_length=500)
+    id_wap = models.CharField(max_length=100)
 
 
 class Error(models.Model):

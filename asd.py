@@ -1,4 +1,4 @@
-data={"object": "whatsapp_business_account", "entry": [{"id": "159738167225852", "changes": [{"value": {"messaging_product": "whatsapp", "metadata": {"display_phone_number": "15551309883", "phone_number_id": "173974499122607"}, "contacts": [{"profile": {"name": "DN"}, "wa_id": "5491166531292"}], "messages": [{"context": {"from": "15551309883", "id": "wamid.HBgNNTQ5MTE2NjUzMTI5MhUCABEYEkY1OTJDQTBCNDc1OUI0QUFFMwA="}, "from": "5491166531292", "id": "wamid.HBgNNTQ5MTE2NjUzMTI5MhUCABIYFjNFQjBBNkE2NEUxRjE3RTE4REU3RTEA", "timestamp": "1700144670", "type": "interactive", "interactive": {"type": "list_reply", "list_reply": {"id": "sed1_row_2", "title": "⭐​⭐​"}}}]}, "field": "messages"}]}]}
+data={"object": "whatsapp_business_account", "entry": [{"id": "108828695276403", "changes": [{"value": {"messaging_product": "whatsapp", "metadata": {"display_phone_number": "15550752089", "phone_number_id": "105875182242051"}, "contacts": [{"profile": {"name": "DN"}, "wa_id": "5491166531292"}], "messages": [{"from": "5491166531292", "id": "wamid.HBgNNTQ5MTE2NjUzMTI5MhUCABIYFjNFQjBFMDk1NzcwRUFBNzM3NkZBQjAA", "timestamp": "1701032240", "text": {"body": "Hola"}, "type": "text"}]}, "field": "messages"}]}]}
 
 
 def obtener_Mensaje_whatsapp(message):
@@ -21,5 +21,8 @@ def obtener_Mensaje_whatsapp(message):
     
     return text
 
-print(data["entry"][0]['changes'][0]['value']['messages'][0]['context']['id'])
-print(len(data["entry"][0]['changes'][0]['value']['messages'][0]['interactive']['list_reply']['title']))
+print(data["entry"][0]["changes"][0]['value']['metadata']['display_phone_number'])
+
+
+
+

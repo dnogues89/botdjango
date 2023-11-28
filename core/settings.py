@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['fransibot.pythonanywhere.com']
 
+APPEND_SLASH = True
 
 # Application definition
 
