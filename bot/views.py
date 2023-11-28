@@ -178,25 +178,25 @@ def webhook(request):
     return HttpResponse('Hola mundo')
     
 def clientes_abandonados(request):
-    limit = timezone.now() - timedelta(minutes=30)
+    from datetime import datetime, timedelta
+    limit = datetime.now() - timedelta(minutes=30)
     clientes = Cliente.objects.filter(flow=50)
+    clientes = clientes.filter(contacto__lte=datetime.now()+timedelta(minutes=10))
     
     for cliente in clientes:
-        # Convierte cliente.contacto a la zona horaria de limit
-        contacto_cliente = timezone.make_aware(cliente.contacto, timezone.get_current_timezone())
-        if contacto_cliente < limit:
+        if cliente.contacto < limit:
             cliente.flow = 30
             cliente.save()
     
-    # Filtra los clientes según tus condiciones
-    clientes = Cliente.objects.exclude(
-        flow__in=['30', '50', '0'],
-        contacto__lt=limit
-    )
+    # # Filtra los clientes según tus condiciones
+    # clientes = Cliente.objects.exclude(
+    #     flow__in=['30', '50', '0'],
+    #     contacto__lt=limit
+    # )
+    # for cliente in clientes:
+    #     cliente.flow=0
+    #     #ACA SE MANDA AL CRM!
+        
+    #     cliente.save()
     
-    for cliente in clientes:
-        cliente.flow = 0
-        # ACA SE MANDA AL CRM!
-        cliente.save()
-    
-    return f"{clientes}"
+    return (f"{clientes}")
