@@ -179,14 +179,13 @@ def webhook(request):
     
 def clientes_abandonados(request):
     from datetime import datetime, timedelta
-    limit = datetime.now() - timedelta(minutes=30)
     clientes = Cliente.objects.filter(flow=50)
     clientes = clientes.filter(contacto__lte=datetime.now()+timedelta(minutes=10))
     
-    for cliente in clientes:
-        if cliente.contacto < limit:
-            cliente.flow = 30
-            cliente.save()
+    # for cliente in clientes:
+    #     if cliente.contacto < limit:
+    #         cliente.flow = 30
+    #         cliente.save()
     
     # # Filtra los clientes según tus condiciones
     # clientes = Cliente.objects.exclude(
