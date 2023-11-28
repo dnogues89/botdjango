@@ -187,12 +187,11 @@ def clientes_abandonados(request):
     clientes = Cliente.objects.filter(flow=50)
     
     
-    clientes_filtrados = clientes.filter(contacto__lte=datetime.now() + timedelta(minutes=10))
+    clientes_filtrados = clientes.filter(contacto__lte=datetime.now()+timedelta(hours=3,minutes=30))
     
-    # for cliente in clientes:
-    #     if cliente.contacto < limit:
-    #         cliente.flow = 30
-    #         cliente.save()
+    for cliente in clientes:
+        cliente.flow = 30
+        cliente.save()
     
     # # Filtra los clientes según tus condiciones
     # clientes = Cliente.objects.exclude(
