@@ -198,4 +198,4 @@ def clientes_abandonados(request):
         
     #     cliente.save()
     
-    return (f"{clientes}")
+    return HttpResponse(f"{clientes}")
