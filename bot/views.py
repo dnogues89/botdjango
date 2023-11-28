@@ -193,3 +193,5 @@ def clientes_abandonados(request):
         #ACA SE MANDA AL CRM!
         
         cliente.save()
+    
+    return (f"{clientes}")
