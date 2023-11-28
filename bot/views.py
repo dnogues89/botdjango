@@ -180,6 +180,8 @@ def webhook(request):
 def clientes_abandonados(request):
     from datetime import datetime, timedelta, timezone
     # Obtén la zona horaria de Buenos Aires
+    now = datetime.now()+timedelta(hours=3)
+    limit = now + timedelta(hours=3,minutes=10)
 
     # Obtén la fecha y hora actual en la zona horaria de Buenos Aires
     clientes = Cliente.objects.filter(flow=50)
@@ -203,4 +205,4 @@ def clientes_abandonados(request):
         
     #     cliente.save()
     
-    return HttpResponse(f"Clientes:{clientes[0].contacto}\nTIMEZONE {datetime.now()} delta {datetime.now() + timedelta(minutes=10)}\n Abandonados: {clientes_filtrados}")
+    return HttpResponse(f"Clientes:{clientes[0].contacto}\nTIMEZONE ahora {now} delta {limit}\n Abandonados: {clientes_filtrados}")
