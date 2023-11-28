@@ -68,9 +68,11 @@ class ChatFlow():
                 self.flow = Flow.objects.get(flow_id=0)
         if self.flow.flow_id == 3:
             self.cliente.canal = self.mensaje
+            #elegiste taller
             if str(self.mensaje)=='2':
                 self.cliente.flow = 222
                 self.flow = Flow.objects.get(flow_id=222)
+            #elegiste planes
             if str(self.mensaje)=='3':
                 self.cliente.flow = 223
                 self.flow = Flow.objects.get(flow_id=223)         
