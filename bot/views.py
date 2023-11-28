@@ -176,10 +176,13 @@ def webhook(request):
     
 def clientes_abandonados(request):
     from datetime import datetime, timedelta
-    limit = datetime.now() - timedelta(minutes=30)
+    from django.utils import timezone
+    limit = timezone.now() - timedelta(minutes=30)
     clientes = Cliente.objects.filter(flow=50)
+    
     for cliente in clientes:
-        if cliente.contacto < limit:
+        # Asegúrate de que cliente.contacto esté en el mismo formato que limit
+        if cliente.contacto.replace(tzinfo=None) < limit:
             cliente.flow = 30
             cliente.save()
     
@@ -188,10 +191,10 @@ def clientes_abandonados(request):
         flow__in=['30', '50', '0'],
         contacto__lt=limit
     )
+    
     for cliente in clientes:
-        cliente.flow=0
-        #ACA SE MANDA AL CRM!
-        
+        cliente.flow = 0
+        # ACA SE MANDA AL CRM!
         cliente.save()
     
-    return (f"{clientes}")
+    return f"{clientes}"
