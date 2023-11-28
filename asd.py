@@ -26,3 +26,16 @@ print(data["entry"][0]["changes"][0]['value']['metadata']['display_phone_number'
 
 
 
+from datetime import datetime, timedelta, timezone
+import pytz 
+now = datetime.now()
+
+# Obtén la zona horaria de Buenos Aires
+# Obtén la zona horaria de Buenos Aires
+buenos_aires_tz = pytz.timezone('America/Argentina/Buenos_Aires')
+
+# Obtén la fecha y hora actual en la zona horaria de Buenos Aires
+now_buenos_aires = datetime.now(tz=buenos_aires_tz)
+
+
+print(buenos_aires_tz)
