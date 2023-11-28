@@ -68,6 +68,12 @@ class ChatFlow():
                 self.flow = Flow.objects.get(flow_id=0)
         if self.flow.flow_id == 3:
             self.cliente.canal = self.mensaje
+            if str(self.mensaje)=='2':
+                self.cliente.flow = 222
+                self.flow = Flow.objects.get(flow_id=222)
+            if str(self.mensaje)=='3':
+                self.cliente.flow = 223
+                self.flow = Flow.objects.get(flow_id=223)         
         if self.flow.flow_id == 4:
             self.cliente.modelo = modelos[int(self.mensaje)]['modelo']
         if self.flow.flow_id == 50:
