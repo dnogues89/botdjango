@@ -7,6 +7,9 @@ import re
 
 from calidad.models import Encuesta
 
+from datetime import timedelta
+from django.utils import timezone
+
 
 import json
 
@@ -175,14 +178,13 @@ def webhook(request):
     return HttpResponse('Hola mundo')
     
 def clientes_abandonados(request):
-    from datetime import datetime, timedelta
-    from django.utils import timezone
     limit = timezone.now() - timedelta(minutes=30)
     clientes = Cliente.objects.filter(flow=50)
     
     for cliente in clientes:
-        # Asegúrate de que cliente.contacto esté en el mismo formato que limit
-        if cliente.contacto.replace(tzinfo=None) < limit:
+        # Convierte cliente.contacto a la zona horaria de limit
+        contacto_cliente = timezone.make_aware(cliente.contacto, timezone.get_current_timezone())
+        if contacto_cliente < limit:
             cliente.flow = 30
             cliente.save()
     
