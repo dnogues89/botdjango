@@ -171,8 +171,9 @@ def webhook(request):
 
             Error.objects.create(error='OK',json=data).save()
 
+        return HttpResponse('Hola mundo')
     return HttpResponse('Hola mundo')
-
+    
 def clientes_abandonados(request):
     from datetime import datetime, timedelta
     limit = datetime.now() - timedelta(minutes=30)
