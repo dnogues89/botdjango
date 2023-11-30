@@ -4,7 +4,9 @@ RUN apt-get update && apt-get install -y build-essential
 
 RUN pip install --upgrade pip
 
-COPY ./!(db.sqlite3) /app
+COPY . /app
+
+RUN rm /app/db.sqlite3
 
 WORKDIR /app
 
