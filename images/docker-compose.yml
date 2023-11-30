@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  espasa-app:
+    container_name: botdjango
+    image: botdjango:v0.1
+    volumes:
+      - ../db.sqlite3:/app/db.sqlite3
+    ports:
+      - "8000:8000"
+    extra_hosts:
+      - "mail.backoffice.com.ar:10.0.4.50"
+
+  nginx-espasa:
+    container_name: nginx-espasa
+    image: nginx-espasa:v0.1
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - botdjango
