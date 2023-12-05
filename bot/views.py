@@ -80,18 +80,17 @@ class ChatFlow():
         if self.flow.flow_id == 4:
             self.cliente.modelo = modelos[int(self.mensaje)]['modelo']
         #enviar lead al crm
-        if self.flow.flow_id == 30: 
-            send_crm = FransiCRM('/altaPropuesta',self.cliente)
-            send_crm = send_crm.send_data()
-            if send_crm[0]:
-                self.cliente.propuesta_crm = send_crm[1]['numero']
-                self.cliente.cant_contactos = int(self.cliente.cant_contactos)+1
-                self.cliente.save()
-            else:
-                Error.objects.create(error=f'Error envio CRM\n{self.cliente.telefono}',json=send_crm[1]).save()       
         if self.flow.flow_id == 50:
             if self.cliente.comentario == None:
                 self.cliente.comentario = self.mensaje
+                send_crm = FransiCRM('/altaPropuesta',self.cliente)
+                send_crm = send_crm.send_data()
+                if send_crm[0]:
+                    self.cliente.propuesta_crm = send_crm[1]['numero']
+                    self.cliente.cant_contactos = int(self.cliente.cant_contactos)+1
+                    self.cliente.save()
+                else:
+                    Error.objects.create(error=f'Error envio CRM\n{self.cliente.telefono}',json=send_crm[1]).save()       
 
 
     def validate_mail(self, correo):
