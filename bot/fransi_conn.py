@@ -41,6 +41,7 @@ class FransiCRM():
         else:
             data['contacto']['nombre'] = self.cliente.nombre
             
+        data['contacto']['celular'] = self.cliente.telefono
         data['contacto']['email'] = self.cliente.email
         data['referencia'] = self.cliente.modelo
         data['comentarios'] = self.cliente.comentario
