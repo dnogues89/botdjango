@@ -84,8 +84,9 @@ class ChatFlow():
             send_crm = FransiCRM('/altaPropuesta',self.cliente)
             send_crm = send_crm.send_data()
             if send_crm[0]:
-                print(send_crm[1])            
-            
+                pass
+            else:
+                Error.objects.create(error=f'Error envio CRM\n{self.cliente.telefono}',json=send_crm[1]).save()       
         if self.flow.flow_id == 50:
             if self.cliente.comentario == None:
                 self.cliente.comentario = self.mensaje
