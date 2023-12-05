@@ -6,7 +6,7 @@ RUN pip install --upgrade pip
 
 COPY . /app
 
-RUN rm /app/db.sqlite3
+# RUN rm /app/db.sqlite3
 
 WORKDIR /app
 
