@@ -1,6 +1,6 @@
 import requests
 import json
-from key import fransi_key
+from .key import fransi_key
 
 class FransiCRM():
     def __init__(self,end_point,cliente) -> None:
