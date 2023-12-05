@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from .models import MensajesRecibidos, Error,Key, Cliente, Flow
 from django.views.decorators.csrf import csrf_exempt
 from . import services
-from fransi_conn import FransiCRM
+from .fransi_conn import FransiCRM
 import re
 
 from calidad.models import Encuesta

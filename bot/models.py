@@ -23,11 +23,15 @@ class Cliente(models.Model):
     contacto = models.DateTimeField(auto_now=True)
     propuesta_crm = models.CharField(max_length=20, blank=True, null=True, default="")
     cant_contactos = models.IntegerField(default=1)
-
+    
+    def __str__(self) -> str:
+        return self.nombre
     
     class Meta:
         verbose_name = 'cliente'
         verbose_name_plural = 'clientes'
+        
+    
     
 class Flow(models.Model):
     flow_id = models.IntegerField()
