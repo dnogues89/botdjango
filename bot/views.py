@@ -220,4 +220,4 @@ def clientes_abandonados(request):
         else:
             Error.objects.create(error=f'Error envio CRM\n{cliente.telefono}',json=send_crm[1]).save()
     
-    return HttpResponse(f"En espera: {clientes_filtrados}")
+    return HttpResponse(f"En espera: {clientes_filtrados}\nAbandonados:{clientes_abandonados}")
