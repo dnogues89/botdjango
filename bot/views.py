@@ -81,7 +81,7 @@ class ChatFlow():
             self.cliente.modelo = modelos[int(self.mensaje)]['modelo']
         #enviar lead al crm
         if self.flow.flow_id == 50:
-            if self.cliente.comentario == None:
+            if self.cliente.comentario == 'Sin Comentario':
                 self.cliente.comentario = self.mensaje
                 send_crm = FransiCRM('/altaPropuesta',self.cliente)
                 send_crm = send_crm.send_data()
