@@ -22,7 +22,7 @@ class Cliente(models.Model):
     comentario = models.CharField(max_length=1000,blank=True,null=True,default='Sin Comentario')
     contacto = models.DateTimeField(auto_now=True)
     propuesta_crm = models.CharField(max_length=20, blank=True, null=True, default="")
-    cant_contactos = models.IntegerField(default=1)
+    cant_contactos = models.IntegerField(default=0)
     
     def __str__(self) -> str:
         return self.nombre
