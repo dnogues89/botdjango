@@ -1,6 +1,10 @@
 from django.contrib import admin
 from .models import MensajesRecibidos, Error, Flow, Cliente,Key
 
+admin.site.site_header = "Admin Whatsapp BOT"
+admin.site.site_title = 'Baires BOT DNogues'
+admin.site.index_title = "Baires Bot"
+
 # Register your models here.\\
 class MensajesRecibidosAdmin(admin.ModelAdmin):
     list_display=('telefono_cliente','mensaje','creado','id_wa')

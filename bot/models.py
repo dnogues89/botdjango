@@ -14,13 +14,15 @@ class Error(models.Model):
     
 class Cliente(models.Model):
     telefono = models.IntegerField(unique=True)
-    nombre = models.CharField(max_length=50, blank=True,null=True)
-    email = models.CharField(max_length=50, blank=True,null=True)
+    nombre = models.CharField(max_length=50, blank=True,null=True, default="Estimado")
+    email = models.CharField(max_length=50, blank=True,null=True, default='sin@email.com')
     flow = models.IntegerField(blank=True,null=True)
-    modelo = models.CharField(max_length=50, blank=True,null=True)
+    modelo = models.CharField(max_length=50, blank=True,null=True,default='Sin especificar')
     canal = models.CharField(max_length=50, blank=True,null=True)
-    comentario = models.CharField(max_length=1000,blank=True,null=True)
+    comentario = models.CharField(max_length=1000,blank=True,null=True,default='Sin Comentario')
     contacto = models.DateTimeField(auto_now=True)
+    propuesta_crm = models.CharField(max_length=20, blank=True, null=True, default="")
+    cant_contactos = models.IntegerField(default=1)
 
     
     class Meta:

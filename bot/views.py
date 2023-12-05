@@ -3,6 +3,7 @@ from django.http import JsonResponse, HttpResponse
 from .models import MensajesRecibidos, Error,Key, Cliente, Flow
 from django.views.decorators.csrf import csrf_exempt
 from . import services
+from fransi_conn import FransiCRM
 import re
 
 from calidad.models import Encuesta
@@ -39,7 +40,7 @@ class ChatFlow():
             22:self.validate_numero(self.mensaje,2),
             3:self.validate_numero(self.mensaje,3),
             4:self.validate_numero(self.mensaje,6),
-            30:True,
+            30:True, #enviar al CRM
             50:True,
         }
         
@@ -78,6 +79,13 @@ class ChatFlow():
                 self.flow = Flow.objects.get(flow_id=223)         
         if self.flow.flow_id == 4:
             self.cliente.modelo = modelos[int(self.mensaje)]['modelo']
+        #enviar lead al crm
+        if self.flow.flow_id == 30: 
+            send_crm = FransiCRM('/altaPropuesta',self.cliente)
+            send_crm = send_crm.send_data()
+            if send_crm[0]:
+                print(send_crm[1])            
+            
         if self.flow.flow_id == 50:
             if self.cliente.comentario == None:
                 self.cliente.comentario = self.mensaje
