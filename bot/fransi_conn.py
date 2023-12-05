@@ -4,7 +4,7 @@ from .key import fransi_key
 
 class FransiCRM():
     def __init__(self,end_point,cliente) -> None:
-        self.url = f'https:#gvcrmweb.backoffice.com.ar/apicrmfransi/v1/propuesta{end_point}'
+        self.url = f'https://gvcrmweb.backoffice.com.ar/apicrmfransi/v1/propuesta{end_point}'
         self.api_key = fransi_key
         self.cliente = cliente
         self.data = self.get_data()
