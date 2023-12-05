@@ -54,9 +54,6 @@ class FransiCRM():
         headers = {"apiKey": self.api_key, 'Content-Type': 'application/json'}
         response = requests.post(self.url, data=self.data, headers=headers)
         if response.status_code == 200:
-            self.cliente.propuesta_crm = response.json()['numero']
-            self.cliente.cant_contactos = int(self.cliente.cant_contactos)+1
-            self.cliente.save()
             return True, response.json()
         else:
             return False, response.json()
