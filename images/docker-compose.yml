@@ -10,4 +10,9 @@ services:
       - "8002:8000"
     extra_hosts:
       - "mail.backoffice.com.ar:10.0.4.50"
+    networks:
+      - espasa-network
 
+networks:
+  espasa-network:
+    driver: bridge
