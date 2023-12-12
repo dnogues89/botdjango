@@ -213,7 +213,10 @@ def clientes_abandonados(request):
         send_crm = FransiCRM('/altaPropuesta',cliente)
         send_crm = send_crm.send_data()
         if send_crm[0]:
-            cliente.flow=0
+            if cliente.email == 'sin@email.com':
+                cliente.flow=0
+            else:
+                cliente.flow = 30
             cliente.propuesta_crm = send_crm[1]['numero']
             cliente.cant_contactos = int(cliente.cant_contactos)+1
             cliente.save()
