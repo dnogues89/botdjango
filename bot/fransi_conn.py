@@ -40,7 +40,8 @@ class FransiCRM():
             data['contacto']['apellido'] = ' '.join(lista[1:])
         else:
             data['contacto']['nombre'] = self.cliente.nombre
-            
+        
+        data['motivoAcercamiento'] = self.cliente.canal_contacto
         data['contacto']['celular'] = str(self.cliente.telefono)
         data['contacto']['email'] = self.cliente.email
         data['referencia'] = self.cliente.modelo
