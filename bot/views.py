@@ -59,6 +59,11 @@ class ChatFlow():
 
               
     def update_cliente(self):
+        if self.flow.flow_id == 0:
+            try:
+                self.cliente.canal_contacto = self.mensaje.split('|')[0]
+            except:
+                pass
         if self.flow.flow_id == 1:
             self.cliente.nombre = self.mensaje
         if self.flow.flow_id == 2:
