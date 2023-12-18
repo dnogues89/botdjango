@@ -40,7 +40,7 @@ class ChatFlow():
             22:self.validate_numero(self.mensaje,2),
             3:self.validate_numero(self.mensaje,3),
             4:self.validate_numero(self.mensaje,6),
-            30:True, #enviar al CRM
+            30:True,
             50:True,
         }
         
@@ -75,16 +75,16 @@ class ChatFlow():
             if str(self.mensaje) != '1':
                 self.cliente.flow = 0
                 self.flow = Flow.objects.get(flow_id=0)
-        if self.flow.flow_id == 3:
-            self.cliente.canal = self.mensaje
-            #elegiste taller
-            if str(self.mensaje)=='2':
-                self.cliente.flow = 222
-                self.flow = Flow.objects.get(flow_id=222)
-            #elegiste planes
-            if str(self.mensaje)=='3':
-                self.cliente.flow = 223
-                self.flow = Flow.objects.get(flow_id=223)         
+        # if self.flow.flow_id == 3:
+        #     self.cliente.canal = self.mensaje
+        #     #elegiste taller
+        #     if str(self.mensaje)=='2':
+        #         self.cliente.flow = 222
+        #         self.flow = Flow.objects.get(flow_id=222)
+        #     #elegiste planes
+        #     if str(self.mensaje)=='3':
+        #         self.cliente.flow = 223
+        #         self.flow = Flow.objects.get(flow_id=223)         
         if self.flow.flow_id == 4:
             self.cliente.modelo = modelos[int(self.mensaje)]['modelo']
         #enviar lead al crm
