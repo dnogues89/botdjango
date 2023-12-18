@@ -13,7 +13,7 @@ class ClienteAdmin(admin.ModelAdmin):
     list_display=('nombre','telefono','email','flow','contacto','cant_contactos','canal_contacto')
     search_fields = ['nombre','telefono','email']
     date_hierarchy = 'contacto'
-    ordering = ('contacto')
+    ordering = ('contacto',)
 
 class FlowAdmin(admin.ModelAdmin):
     list_display=('flow_id','respuesta_ok','next_flow','respuesta_nook')
