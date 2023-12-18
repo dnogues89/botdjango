@@ -11,7 +11,7 @@ class MensajesRecibidosAdmin(admin.ModelAdmin):
 
 class ClienteAdmin(admin.ModelAdmin):
     list_display=('nombre','telefono','email','flow','contacto','cant_contactos','canal_contacto')
-    search_fields = ['nombre','telefono']
+    search_fields = ['nombre','telefono','email']
     date_hierarchy = 'contacto'
 
 class FlowAdmin(admin.ModelAdmin):
