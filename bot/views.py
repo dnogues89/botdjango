@@ -63,6 +63,8 @@ class ChatFlow():
             try:
                 if "|" in self.mensaje:
                     self.cliente.canal_contacto = self.mensaje.split('|')[0]
+                if 'mercadolibre.com.ar' in self.mensaje:
+                    self.cliente.canal_contacto = 'Mercadolibre'
             except:
                 pass
         if self.flow.flow_id == 1:
