@@ -12,6 +12,18 @@ from datetime import timedelta
 from django.utils import timezone
 
 
+#Evitar duplicidad
+import threading
+
+# Crear un semáforo para bloquear el acceso al endpoint
+lock = threading.Lock()
+
+def endpoint_lock(func):
+    def wrapper(*args, **kwargs):
+        with lock:
+            return func(*args, **kwargs)
+    return wrapper
+
 import json
 
 modelos = {
@@ -133,6 +145,7 @@ def procesar_mensaje(body):
 
 # Create your views here.
 @csrf_exempt
+@endpoint_lock  
 def webhook(request):
     # SI HAY DATOS RECIBIDOS VIA GET
     if request.method == "GET":
