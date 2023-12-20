@@ -103,6 +103,7 @@ class ChatFlow():
         if self.flow.flow_id == 50:
             if self.cliente.comentario == 'Sin Comentario':
                 self.cliente.comentario = self.mensaje
+                self.cliente.save()
                 send_crm = FransiCRM('/altaPropuesta',self.cliente)
                 send_crm = send_crm.send_data()
                 if send_crm[0]:
