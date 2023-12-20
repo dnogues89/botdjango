@@ -147,7 +147,7 @@ def procesar_mensaje(body):
 
 # Create your views here.
 @csrf_exempt
-@endpoint_lock  
+# @endpoint_lock  
 def webhook(request):
     # SI HAY DATOS RECIBIDOS VIA GET
     if request.method == "GET":
