@@ -223,7 +223,7 @@ def clientes_abandonados(request):
     # Obtén la fecha y hora actual en la zona horaria de Buenos Aires
     clientes = Cliente.objects.filter(flow=50)
     
-    clientes_filtrados = clientes.filter(contacto__lte=datetime.now()+timedelta(hours=3,minutes=10))
+    clientes_filtrados = clientes.filter(contacto__lte=datetime.now()+timedelta(hours=3,minutes=30))
     
     for cliente in clientes_filtrados:
         cliente.flow = 30
