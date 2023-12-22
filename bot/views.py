@@ -225,7 +225,7 @@ def clientes_abandonados(request):
     # Obtén la fecha y hora actual en la zona horaria de Buenos Aires
     clientes = Cliente.objects.filter(flow=50)
     
-    clientes_filtrados = clientes.filter(contacto__lte=datetime.now()+timedelta(hours=3,minutes=30))
+    clientes_filtrados = clientes.filter(contacto__lte=limit)
     
     for cliente in clientes_filtrados:
         cliente.flow = 30
@@ -234,7 +234,7 @@ def clientes_abandonados(request):
     
     # Filtra los clientes según tus condiciones
     clientes = Cliente.objects.exclude(flow=50).exclude(flow=0).exclude(flow=30)
-    clientes_abandonados = clientes.filter(contacto__lte=datetime.now()+timedelta(hours=3,minutes=30))
+    clientes_abandonados = clientes.filter(contacto__lte=limit)
     for cliente in clientes_abandonados:
         send_crm = FransiCRM('/altaPropuesta',cliente)
         send_crm = send_crm.send_data()
