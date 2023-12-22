@@ -10,6 +10,7 @@ from calidad.models import Encuesta
 
 from datetime import timedelta
 from django.utils import timezone
+from django.conf import settings
 
 
 #Evitar duplicidad
@@ -216,9 +217,10 @@ def webhook(request):
     
 def clientes_abandonados(request):
     from datetime import datetime, timedelta, timezone
+    settings.USE_TZ = False
     # Obtén la zona horaria de Buenos Aires
     now = datetime.now()+timedelta(hours=3)
-    limit = now + timedelta(minutes=10)
+    limit = datetime.now()+timedelta(hours=3)-timedelta(minutes=30)
 
     # Obtén la fecha y hora actual en la zona horaria de Buenos Aires
     clientes = Cliente.objects.filter(flow=50)
@@ -246,5 +248,7 @@ def clientes_abandonados(request):
             cliente.save()
         else:
             Error.objects.create(error=f'Error envio CRM\n{cliente.telefono}',json=send_crm[1]).save()
+    
+    settings.USE_TZ = True
     
     return HttpResponse(f"En espera: {clientes_filtrados}\nAbandonados:{clientes_abandonados}")
