@@ -5,3 +5,4 @@
 /static/
 asd.json
 /bot/key.py
+/core/email_settings.py

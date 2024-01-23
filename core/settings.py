@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-h4(876r1k3q#bo$h%*nhkzn(6n&6j2@%34)298s)w!3*8hw^g+
 CSRF_TRUSTED_ORIGINS = ['http://dnoguesdev.com.ar', 'https://dnoguesdev.com.ar', 'http://*.dnoguesdev.com.ar', 'https://*.dnoguesdev.com.ar']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'bot',
     'calidad',
+    'nordel_bot',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +130,12 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+from . import email_settings
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = email_settings.EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = email_settings.EMAIL_HOST_PASSWORD
