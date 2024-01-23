@@ -1,6 +1,5 @@
 import requests
 import json
-from .key import fransi_key
 from django.core.mail import send_mail
 
 
