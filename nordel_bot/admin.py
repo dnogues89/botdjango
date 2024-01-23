@@ -1,9 +1,9 @@
 from django.contrib import admin
 from .models import MensajesRecibidos, Error, Flow, Cliente,Key
 
-admin.site.site_header = "Admin Whatsapp BOT"
-admin.site.site_title = 'BOT Whatsapp DNogues'
-admin.site.index_title = "BOT Whatsapp"
+# admin.site.site_header = "Admin Whatsapp BOT"
+# admin.site.site_title = 'BOT Whatsapp DNogues'
+# admin.site.index_title = "BOT Whatsapp"
 
 # Register your models here.\\
 class MensajesRecibidosAdmin(admin.ModelAdmin):
