@@ -28,12 +28,14 @@ def endpoint_lock(func):
 import json
 
 modelos = {
-1:{'modelo':'Alaskan','ficha':'https://tinyurl.com/yu9bb7r2'},
-2:{'modelo':'Oroch','ficha':'https://tinyurl.com/ymm6s7by'},
-3:{'modelo':'Kangoo','ficha':'https://tinyurl.com/ynpot88c'},
-4:{'modelo':'Stepway','ficha':'https://tinyurl.com/ynjyrnaq'},
-5:{'modelo':'Sandero','ficha':'https://tinyurl.com/ywkl78pg'},
-6:{'modelo':'Logan','ficha':'https://tinyurl.com/yow85svy'},
+1:{'modelo':'Amarok','ficha':'https://tinyurl.com/yu9bb7r2'},
+2:{'modelo':'Taos','ficha':'https://tinyurl.com/ymm6s7by'},
+3:{'modelo':'Polo','ficha':'https://tinyurl.com/ynpot88c'},
+4:{'modelo':'Virtus','ficha':'https://tinyurl.com/ynjyrnaq'},
+5:{'modelo':'Nivus','ficha':'https://tinyurl.com/ywkl78pg'},
+6:{'modelo':'T-Cross','ficha':'https://tinyurl.com/yow85svy'},
+7:{'modelo':'Vento','ficha':'https://tinyurl.com/yow85svy'},
+8:{'modelo':'Tiguan','ficha':'https://tinyurl.com/yow85svy'},
 }
 
 class ChatFlow():
@@ -48,11 +50,11 @@ class ChatFlow():
     def get_respuesta(self):
         hash_map = {
             0:True,
-            1:True,
+            1:self.validate_numero(len(self.mensaje),30),
             2:self.validate_mail(self.mensaje),
             22:self.validate_numero(self.mensaje,2),
             3:self.validate_numero(self.mensaje,3),
-            4:self.validate_numero(self.mensaje,6),
+            4:self.validate_numero(self.mensaje,8),
             30:True,
             50:True,
         }
@@ -88,16 +90,16 @@ class ChatFlow():
             if str(self.mensaje) != '1':
                 self.cliente.flow = 0
                 self.flow = Flow.objects.get(flow_id=0)
-        # if self.flow.flow_id == 3:
-        #     self.cliente.canal = self.mensaje
-        #     #elegiste taller
-        #     if str(self.mensaje)=='2':
-        #         self.cliente.flow = 222
-        #         self.flow = Flow.objects.get(flow_id=222)
-        #     #elegiste planes
-        #     if str(self.mensaje)=='3':
-        #         self.cliente.flow = 223
-        #         self.flow = Flow.objects.get(flow_id=223)         
+        if self.flow.flow_id == 3:
+            self.cliente.canal = self.mensaje
+            #elegiste taller
+            if str(self.mensaje)=='2':
+                self.cliente.flow = 222
+                self.flow = Flow.objects.get(flow_id=222)
+            #elegiste planes
+            if str(self.mensaje)=='3':
+                self.cliente.flow = 223
+                self.flow = Flow.objects.get(flow_id=223)         
         if self.flow.flow_id == 4:
             self.cliente.modelo = modelos[int(self.mensaje)]['modelo']
         #enviar lead al crm
