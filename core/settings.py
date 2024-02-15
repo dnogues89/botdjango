@@ -27,6 +27,8 @@ CSRF_TRUSTED_ORIGINS = ['http://dnoguesdev.com.ar', 'https://dnoguesdev.com.ar',
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+# a ver que pasa
+
 
 ALLOWED_HOSTS = ["*"]
 
