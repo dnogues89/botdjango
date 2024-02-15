@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-h4(876r1k3q#bo$h%*nhkzn(6n&6j2@%34)298s)w!3*8hw^g+
 CSRF_TRUSTED_ORIGINS = ['http://dnoguesdev.com.ar', 'https://dnoguesdev.com.ar', 'http://*.dnoguesdev.com.ar', 'https://*.dnoguesdev.com.ar']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 # a ver que pasa
 
 
@@ -37,12 +37,12 @@ APPEND_SLASH = True
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'bot',
     'calidad',
     'nordel_bot',
@@ -131,7 +131,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'docu_reventas/static'),)
 
 from . import email_settings
 
