@@ -6,6 +6,7 @@ services:
     image: botdjango:v0.1
     volumes:
       - ../db.sqlite3:/app/db.sqlite3
+      - ./static:/app/static
     ports:
       - "8002:8000"
     extra_hosts:
