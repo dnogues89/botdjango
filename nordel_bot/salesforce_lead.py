@@ -25,9 +25,9 @@ class Salesfroce():
             Apellido: {self.apellido}\n
             Email: {self.email}\n
             Teléfono: {self.telefono}\n
-            Origen: {self.canal}\n
+            Origen: WAP\n
             Concesionario: 3101 - NORDELBAHN\n
-            Campaña: \n
+            Campaña: {self.canal}\n
             Comentario: {self.comentario}\n
             País:\n
             Provincia:\n
