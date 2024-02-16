@@ -167,7 +167,7 @@ def webhook(request):
             if 'messages' in data['entry'][0]['changes'][0]['value']:
                 if data['entry'][0]['changes'][0]['value']['messages'][0]['type']!='text':
                     telefonoCliente=data['entry'][0]['changes'][0]['value']['messages'][0]['from']
-                    telefonoCliente=f'54{str(telefonoCliente[3:])}'
+                    telefonoCliente=f'{str(telefonoCliente[3:])}'
                     mensaje='Imagen o Audio'
                     idWA=data['entry'][0]['changes'][0]['value']['messages'][0]['id']
                     timestamp=data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
@@ -178,7 +178,7 @@ def webhook(request):
                             cliente = Cliente.objects.get(telefono = telefonoCliente)
                         except:
                             cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
-                        MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='baires',json=data).save()
+                        MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='nordel_trad',json=data).save()
                                 
                         respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
                         data = services.text_Message(telefonoCliente,respuesta)
@@ -188,7 +188,7 @@ def webhook(request):
                 if 'messages' in data['entry'][0]['changes'][0]['value']:
                     if data['entry'][0]['changes'][0]['value']['messages'][0]['type']=='text':
                         telefonoCliente=data['entry'][0]['changes'][0]['value']['messages'][0]['from']
-                        telefonoCliente=f'54{str(telefonoCliente[3:])}'
+                        telefonoCliente=f'{str(telefonoCliente[3:])}'
                         mensaje=data['entry'][0]['changes'][0]['value']['messages'][0]['text']['body']
                         idWA=data['entry'][0]['changes'][0]['value']['messages'][0]['id']
                         timestamp=data['entry'][0]['changes'][0]['value']['messages'][0]['timestamp']
@@ -200,7 +200,7 @@ def webhook(request):
                             except:
                                 cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
                             
-                            MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='baires',json=data).save()
+                            MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='nordel_trad',json=data).save()
                             chat = ChatFlow(cliente,mensaje)
                             data = services.text_Message(chat.cliente.telefono,chat.answer)
                             envio = services.enviar_Mensaje_whatsapp(token.token,token.url,data)             
