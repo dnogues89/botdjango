@@ -24,6 +24,7 @@ urlpatterns = [
     path('', include('bot.urls')),
     path('calidad/', include('calidad.urls')),
     path('nordel/', include('nordel_bot.urls')),
+    path('espasa/', include('espasa_bot.urls')),
     
 ]
 

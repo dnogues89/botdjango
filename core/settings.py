@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'bot',
     'calidad',
     'nordel_bot',
+    'espasa_bot',
 ]
 
 MIDDLEWARE = [
