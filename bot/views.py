@@ -248,6 +248,8 @@ def clientes_abandonados(request):
             cliente.save()
         else:
             Error.objects.create(error=f'Error envio CRM\n{cliente.telefono}',json=send_crm[1]).save()
+            cliente.cant_contactos = int(cliente.cant_contactos)+1
+            cliente.save()
     
     settings.USE_TZ = True
     
