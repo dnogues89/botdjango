@@ -15,7 +15,7 @@ class Salesfroce():
         self.telefono = self.cliente.telefono
         self.comentario = self.cliente.comentario
         self.producto = self.cliente.modelo
-        self.canal = self.cliente.canal
+        self.canal = self.cliente.canal_contacto
     
     def send_data(self):
         from_mail='pybotwhat@gmail.com'
