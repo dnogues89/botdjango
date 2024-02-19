@@ -24,7 +24,7 @@ class Salesfroce():
             Nombre: \n
             Apellido: {self.apellido}\n
             Email: {self.email}\n
-            Teléfono: {self.telefono}\n
+            Teléfono: {str(self.telefono)[2:]}\n
             Origen: WAP\n
             Concesionario: 3046 - ESPASA S.A.\n
             Campaña: {self.canal}\n

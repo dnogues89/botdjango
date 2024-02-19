@@ -24,9 +24,9 @@ class Salesfroce():
             Nombre: \n
             Apellido: {self.apellido}\n
             Email: {self.email}\n
-            Teléfono: {self.telefono}\n
+            Teléfono: {str(self.telefono)[2:]}\n
             Origen: WAP\n
-            Concesionario: 3101 - NORDELBAHN\n
+            Concesionario: 3046 - ESPASA S.A.\n
             Campaña: {self.canal}\n
             Comentario: {self.comentario}\n
             País:\n
@@ -35,4 +35,4 @@ class Salesfroce():
             Código Postal:\n
             Producto: {self.producto}\n
             """
-        send_mail(asunto,mensaje,from_mail,['vw_emailtoleadservice@j-27sndpfxzeziihub3wz3ki0i9mngk47qm2qzpyudikkis5wmj3.f2-1j2mfeak.na173.apex.salesforce.com','mkt1@nordelbahn.com.ar'])
+        send_mail(asunto,mensaje,from_mail,['vw_emailtoleadservice@j-27sndpfxzeziihub3wz3ki0i9mngk47qm2qzpyudikkis5wmj3.f2-1j2mfeak.na173.apex.salesforce.com','dnogues@espasa.com.ar'])
