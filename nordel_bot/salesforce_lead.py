@@ -26,7 +26,7 @@ class Salesfroce():
             Email: {self.email}\n
             Teléfono: {str(self.telefono)[2:]}\n
             Origen: WAP\n
-            Concesionario: 3046 - ESPASA S.A.\n
+            Concesionario: 3101 - NORDELBAHN\n
             Campaña: {self.canal}\n
             Comentario: {self.comentario}\n
             País:\n
