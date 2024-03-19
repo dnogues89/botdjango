@@ -12,7 +12,7 @@ class LeadAA():
         self.send_lead()
 
     def get_name(self, cliente):
-        lista = cliente.nombre.split(' ')
+        lista = cliente.split(' ')
         if len(lista)>=2:
             self.name = lista[0]
             self.last_name = ' '.join(lista[1:])
