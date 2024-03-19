@@ -12,6 +12,7 @@ from datetime import timedelta
 from django.utils import timezone
 from django.conf import settings
 
+from .aa_lead import LeadAA
 
 #Evitar duplicidad
 import threading
@@ -51,10 +52,9 @@ class ChatFlow():
         hash_map = {
             0:True,
             1:self.validate_numero(len(self.mensaje),30),
-            2:self.validate_mail(self.mensaje),
+            2:self.validate_numero(len(self.mensaje),50),
+            3:self.validate_mail(self.mensaje),
             22:self.validate_numero(self.mensaje,2),
-            3:self.validate_numero(self.mensaje,3),
-            4:self.validate_numero(self.mensaje,8),
             30:True,
             50:True,
         }
@@ -78,6 +78,8 @@ class ChatFlow():
             try:
                 if "|" in self.mensaje:
                     self.cliente.canal_contacto = self.mensaje.split('|')[0]
+                if "-" in self.mensaje:
+                    self.cliente.modelo = self.mensaje.split('|')[-1].split('-')[0]
                 if 'mercadolibre.com.ar' in self.mensaje:
                     self.cliente.canal_contacto = 'Mercadolibre'
             except:
@@ -85,30 +87,20 @@ class ChatFlow():
         if self.flow.flow_id == 1:
             self.cliente.nombre = self.mensaje
         if self.flow.flow_id == 2:
-            self.cliente.email = self.mensaje
+            self.cliente.comentario = self.mensaje
         if self.flow.flow_id == 22:
             if str(self.mensaje) != '1':
                 self.cliente.flow = 0
                 self.flow = Flow.objects.get(flow_id=0)
         if self.flow.flow_id == 3:
-            self.cliente.canal = self.mensaje
-            #elegiste taller
-            if str(self.mensaje)=='2':
-                self.cliente.flow = 222
-                self.flow = Flow.objects.get(flow_id=222)
-            #elegiste planes
-            if str(self.mensaje)=='3':
-                self.cliente.flow = 223
-                self.flow = Flow.objects.get(flow_id=223)         
-        if self.flow.flow_id == 4:
-            self.cliente.modelo = modelos[int(self.mensaje)]['modelo']
+            self.cliente.mail = self.mensaje 
         #enviar lead al crm
         if self.flow.flow_id == 50:
             if self.cliente.comentario == 'Sin Comentario':
                 self.cliente.comentario = self.mensaje
                 self.cliente.save()
-                send_crm = Salesfroce(self.cliente)
-                send_crm = send_crm.send_data()
+                send_crm = LeadAA(self.cliente).response
+                print(send_crm)
                 self.cliente.cant_contactos = int(self.cliente.cant_contactos)+1
                 self.cliente.save()
 

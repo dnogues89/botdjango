@@ -62,9 +62,9 @@ class ChatFlow():
         if hash_map[self.flow.flow_id]:
             self.update_cliente()
             self.answer = self.flow.respuesta_ok
-            self.answer = self.answer.replace('{self.cliente.nombre}',str(self.cliente.nombre)).replace('{self.cliente.telefono}',str(self.cliente.telefono)).replace('{self.cliente.email}',str(self.cliente.email))
+            self.answer = self.answer.replace('{self.cliente.nombre}',str(self.cliente.nombre)).replace('{self.cliente.telefono}',str(self.cliente.telefono)[2:]).replace('{self.cliente.email}',str(self.cliente.email))
             try:
-                self.answer = self.answer.replace('{self.cliente.nombre}',str(self.cliente.nombre)).replace('{self.cliente.telefono}',str(self.cliente.telefono)).replace('{self.cliente.email}',str(self.cliente.email)).replace("{modelos[int(self.mensaje)]['modelo']}",modelos[int(self.mensaje)]['modelo']).replace("{modelos[int(self.mensaje)]['ficha']}",modelos[int(self.mensaje)]['ficha'])
+                self.answer = self.answer.replace('{self.cliente.nombre}',str(self.cliente.nombre)).replace('{self.cliente.telefono}',str(self.cliente.telefono)[2:]).replace('{self.cliente.email}',str(self.cliente.email)).replace("{modelos[int(self.mensaje)]['modelo']}",modelos[int(self.mensaje)]['modelo']).replace("{modelos[int(self.mensaje)]['ficha']}",modelos[int(self.mensaje)]['ficha'])
             except:
                 pass
             self.cliente.flow=self.flow.next_flow
