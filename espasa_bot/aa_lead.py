@@ -8,7 +8,7 @@ class LeadAA():
         self.email = cliente.email
         self.canal = cliente.canal_contacto
         self.comentario = cliente.comentario
-        self.get_name()
+        self.get_name(cliente.nombre)
         self.send_lead()
 
     def get_name(self, cliente):
