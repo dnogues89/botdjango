@@ -92,13 +92,14 @@ class ChatFlow():
             self.cliente.email = self.mensaje
             # enviar Lead
         if self.flow.flow_id == 22:
-            if str(self.mensaje) != '1':
+            if str(self.mensaje) == '2':
                 self.cliente.flow = 0
                 self.flow = Flow.objects.get(flow_id=0)
-            send_crm = LeadAA(self.cliente)
-            self.propuesta_crm = send_crm.response
-            self.cliente.cant_contactos = int(self.cliente.cant_contactos)+1
-            self.cliente.save()
+            if str(self.mensaje) == '1':
+                send_crm = LeadAA(self.cliente)
+                self.propuesta_crm = send_crm.response
+                self.cliente.cant_contactos = int(self.cliente.cant_contactos)+1
+                self.cliente.save()
 
     def validate_mail(self, correo):
         patron = r'^[A-Za-z0-9\s\._%+-]+@[\w\.-]+\.\w+$'
