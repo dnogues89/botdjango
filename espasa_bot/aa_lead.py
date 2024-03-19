@@ -17,7 +17,7 @@ class LeadAA():
             self.name = lista[0]
             self.last_name = ' '.join(lista[1:])
         else:
-            self.name = cliente.nombre
+            self.name = cliente
             self.last_name = 'NN'
 
     def send_lead(self):
