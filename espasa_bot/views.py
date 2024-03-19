@@ -143,7 +143,7 @@ def webhook(request):
     # SI HAY DATOS RECIBIDOS VIA GET
     if request.method == "GET":
         # SI EL TOKEN ES IGUAL AL QUE RECIBIMOS
-        if request.GET.get('hub.verify_token') == "NordelBOT":
+        if request.GET.get('hub.verify_token') == "AABotEspasa":
             # ESCRIBIMOS EN EL NAVEGADOR EL VALOR DEL RETO RECIBIDO DESDE FACEBOOK
             return HttpResponse(request.GET.get('hub.challenge'))
         else:
