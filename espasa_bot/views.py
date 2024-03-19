@@ -93,7 +93,7 @@ class ChatFlow():
                 self.cliente.flow = 0
                 self.flow = Flow.objects.get(flow_id=0)
         if self.flow.flow_id == 3:
-            self.cliente.mail = self.mensaje 
+            self.cliente.email = self.mensaje 
         #enviar lead al crm
         if self.flow.flow_id == 50:
             if self.cliente.comentario == 'Sin Comentario':
