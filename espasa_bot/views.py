@@ -97,7 +97,6 @@ class ChatFlow():
                 self.flow = Flow.objects.get(flow_id=0)
             if str(self.mensaje) == '1':
                 send_crm = LeadAA(self.cliente)
-                self.propuesta_crm = send_crm.response
                 self.cliente.cant_contactos = int(self.cliente.cant_contactos)+1
                 self.cliente.save()
 
