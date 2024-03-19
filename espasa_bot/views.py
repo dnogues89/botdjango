@@ -93,9 +93,8 @@ class ChatFlow():
                 self.cliente.flow = 0
                 self.flow = Flow.objects.get(flow_id=0)
         if self.flow.flow_id == 3:
-            self.cliente.email = self.mensaje 
-        #enviar lead al crm
-        if self.flow.flow_id == 50:
+            self.cliente.email = self.mensaje
+            # enviar Lead
             if self.cliente.comentario == 'Sin Comentario':
                 self.cliente.comentario = self.mensaje
                 self.cliente.save()
