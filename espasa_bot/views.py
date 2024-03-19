@@ -221,8 +221,7 @@ def clientes_abandonados(request):
     clientes = Cliente.objects.exclude(flow=50).exclude(flow=0).exclude(flow=30)
     clientes_abandonados = clientes.filter(contacto__lte=limit)
     for cliente in clientes_abandonados:
-        send_crm = Salesfroce(cliente) #Cambiar A Salesforce
-        send_crm = send_crm.send_data()
+        send_crm = LeadAA(cliente) #Cambiar A Salesforce
         if cliente.email == 'sin@email.com':
             cliente.flow=0
         else:
