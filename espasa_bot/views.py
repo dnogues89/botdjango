@@ -168,7 +168,8 @@ def webhook(request):
                             cliente = Cliente.objects.get(telefono = telefonoCliente)
                         except:
                             cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
-                        MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='nordel_trad',json=data).save()
+                            
+                        MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_aa',json=data).save()
                                 
                         respuesta = 'Recorda que soy un 🤖 y mi creador no me dio la capacidad de 👀 o👂, pero enviame un *Texto* que estoy para ayudarte. 🦾'
                         data = services.text_Message(telefonoCliente,respuesta)
@@ -189,6 +190,7 @@ def webhook(request):
                                 cliente = Cliente.objects.get(telefono = telefonoCliente)
                             except:
                                 cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
+                                print(cliente)
                             
                             MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_aa',json=data).save()
                             chat = ChatFlow(cliente,mensaje)
