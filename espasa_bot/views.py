@@ -79,7 +79,10 @@ class ChatFlow():
                 if "|" in self.mensaje:
                     self.cliente.canal_contacto = self.mensaje.split('|')[0]
                 if "-" in self.mensaje:
-                    self.cliente.modelo = self.mensaje.split('|')[-1].split('-')[0]
+                    try:
+                        self.cliente.modelo = self.mensaje.split('|')[-1].split('-')[0]
+                    except:
+                        pass
                 if 'mercadolibre.com.ar' in self.mensaje:
                     self.cliente.canal_contacto = 'Mercadolibre'
             except:
@@ -187,7 +190,7 @@ def webhook(request):
                             except:
                                 cliente=Cliente.objects.create(telefono = telefonoCliente,flow = 0).save()
                             
-                            MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='nordel_trad',json=data).save()
+                            MensajesRecibidos.objects.create(id_wa=idWA,mensaje=mensaje,timestamp=timestamp,telefono_cliente=cliente,telefono_receptor='espasa_aa',json=data).save()
                             chat = ChatFlow(cliente,mensaje)
                             data = services.text_Message(chat.cliente.telefono,chat.answer)
                             envio = services.enviar_Mensaje_whatsapp(token.token,token.url,data)             
