@@ -28,14 +28,15 @@ def endpoint_lock(func):
 import json
 
 modelos = {
-1:{'modelo':'Amarok','ficha':'https://tinyurl.com/yu9bb7r2'},
-2:{'modelo':'Taos','ficha':'https://tinyurl.com/ymm6s7by'},
-3:{'modelo':'Polo','ficha':'https://tinyurl.com/ynpot88c'},
-4:{'modelo':'Virtus','ficha':'https://tinyurl.com/ynjyrnaq'},
-5:{'modelo':'Nivus','ficha':'https://tinyurl.com/ywkl78pg'},
-6:{'modelo':'T-Cross','ficha':'https://tinyurl.com/yow85svy'},
-7:{'modelo':'Vento','ficha':'https://tinyurl.com/yow85svy'},
-8:{'modelo':'Tiguan','ficha':'https://tinyurl.com/yow85svy'},
+1:{'modelo':'Amarok V6','ficha':'https://tinyurl.com/8pcyab36'},
+2:{'modelo':'Amarok 2.0','ficha':'https://tinyurl.com/4juye3u4'},
+3:{'modelo':'Taos','ficha':'https://tinyurl.com/2u9tmppd'}, 
+4:{'modelo':'Polo','ficha':'https://tinyurl.com/47jz9r2s'},
+5:{'modelo':'Virtus','ficha':'https://tinyurl.com/mprwfzra'},
+6:{'modelo':'Nivus','ficha':'https://tinyurl.com/yeyubsm4'},
+7:{'modelo':'T-Cross','ficha':'https://tinyurl.com/2atrp2k6'},
+8:{'modelo':'Vento','ficha':'https://tinyurl.com/a2zpb2y5'},
+9:{'modelo':'Tiguan','ficha':'https://tinyurl.com/yuwyxuu7'}
 }
 
 class ChatFlow():
@@ -54,7 +55,7 @@ class ChatFlow():
             2:self.validate_mail(self.mensaje),
             22:self.validate_numero(self.mensaje,2),
             3:self.validate_numero(self.mensaje,3),
-            4:self.validate_numero(self.mensaje,8),
+            4:self.validate_numero(self.mensaje,9),
             30:True,
             50:True,
         }
