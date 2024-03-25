@@ -13,6 +13,7 @@ from django.utils import timezone
 from django.conf import settings
 
 from .aa_lead import LeadAA
+from .salesforce_lead import Salesfroce
 
 #Evitar duplicidad
 import threading
@@ -51,13 +52,14 @@ class ChatFlow():
     
     def get_respuesta(self):
         hash_map = {
-            0:True,
-            1:self.validate_numero(len(self.mensaje),30),
-            2:self.validate_numero(len(self.mensaje),50),
-            3:self.validate_mail(self.mensaje),
-            22:self.validate_numero(self.mensaje,2),
-            30:True,
-            50:True,
+            0:True, # te pido nombre
+            1:self.validate_numero(len(self.mensaje),30), #Reviso el nombre, te pido el mail
+            2:self.validate_mail(self.mensaje), #Reviso mail te mando a confirmacion
+            3:self.validate_numero(len(self.mensaje),2),#Recibo opcion 1 o 2 confirmo datos, te mando a elegir canal
+            4:self.validate_numero(len(self.mensaje),7),# Entras canal tradicional te pongo las opciones de autos
+            5:self.validate_numero(len(self.mensaje),50),# te pido la consulta te cargo en crm, te mando a fila
+            100:True, #Ya te conozco, te pido confirmar los datos
+            50:True, #COla de espera
         }
         
         if hash_map[self.flow.flow_id]:
@@ -79,11 +81,6 @@ class ChatFlow():
             try:
                 if "|" in self.mensaje:
                     self.cliente.canal_contacto = self.mensaje.split('|')[0]
-                if "-" in self.mensaje:
-                    try:
-                        self.cliente.modelo = self.mensaje.split('|')[-1].split('-')[0]
-                    except:
-                        pass
                 if 'mercadolibre.com.ar' in self.mensaje:
                     self.cliente.canal_contacto = 'Mercadolibre'
             except:
@@ -91,22 +88,37 @@ class ChatFlow():
         if self.flow.flow_id == 1:
             self.cliente.nombre = self.mensaje
         if self.flow.flow_id == 2:
-            self.cliente.comentario = self.mensaje
-        if self.flow.flow_id == 3:
             self.cliente.email = self.mensaje
-            # enviar Lead
-        if self.flow.flow_id == 22:
-            if str(self.mensaje) == '2':
+        if self.flow.flow_id == 3:
+            if str(self.mensaje) != '1':
                 self.cliente.flow = 0
                 self.flow = Flow.objects.get(flow_id=0)
-            if str(self.mensaje) == '1':
-                if self.cliente.canal == 'AA':
-                    send_crm = LeadAA(self.cliente)
-                else:
-                    send_crm = Salesfroce(self.cliente) #Cambiar A Salesforce
-                    send_crm = send_crm.send_data()
+        if self.flow.flow_id == 4:
+            self.cliente.canal = self.mensaje
+            #elegiste taller
+            if str(self.mensaje)=='3':
+                self.cliente.flow = 33
+                self.flow = Flow.objects.get(flow_id=33)
+            #elegiste planes
+            if str(self.mensaje)=='2':
+                self.cliente.flow = 32
+                self.flow = Flow.objects.get(flow_id=32)
+                send_crm = LeadAA(self.cliente)
                 self.cliente.cant_contactos = int(self.cliente.cant_contactos)+1
                 self.cliente.save()
+ 
+        if self.flow.flow_id == 5:
+            self.cliente.modelo = modelos[int(self.mensaje)]['modelo']
+        #enviar lead al crm
+        if self.flow.flow_id == 50:
+            if self.cliente.comentario == 'Sin Comentario':
+                self.cliente.comentario = self.mensaje
+                self.cliente.save()
+                send_crm = Salesfroce(self.cliente)
+                send_crm = send_crm.send_data()
+                self.cliente.cant_contactos = int(self.cliente.cant_contactos)+1
+                self.cliente.save()
+
                     
 
     def validate_mail(self, correo):
