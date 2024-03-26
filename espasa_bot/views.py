@@ -225,7 +225,6 @@ def clientes_abandonados(request):
     
     for cliente in clientes_filtrados:
         cliente.flow = 30
-        cliente.comentario = 'Sin Comentario'
         cliente.save()
     
     # Filtra los clientes según tus condiciones
