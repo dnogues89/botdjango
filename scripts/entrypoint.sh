@@ -3,8 +3,8 @@
 python manage.py collectstatic --no-input
 # i commit my migration files to git so i dont need to run it on server
 # ./manage.py makemigrations app_name
-python manage.py makemigrations --no-input
-python manage.py migrate --no-input
+python manage.py makemigrations --noinput
+python manage.py migrate --noinput
 
 # here it start nginx and the uwsgi
 #supervisord -c /etc/supervisor/supervisord.conf -n
