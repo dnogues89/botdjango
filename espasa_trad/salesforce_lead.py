@@ -1,12 +1,14 @@
 import requests
 import json
 from django.core.mail import send_mail
+from .models import Key
 
 
 class Salesfroce():
     def __init__(self, cliente) -> None:
         self.cliente = cliente
         self.get_data()
+        self.key = Key.objects.get(name='salesforce')
         
 
     def get_data(self):
@@ -25,8 +27,8 @@ class Salesfroce():
             Apellido: {self.apellido}\n
             Email: {self.email}\n
             Teléfono: {str(self.telefono)[2:]}\n
-            Origen: WAP\n
-            Concesionario: 3046 - ESPASA S.A.\n
+            Origen: {self.key.url}\n
+            Concesionario: {self.key.token}\n
             Campaña: {self.canal}\n
             Comentario: {self.comentario}\n
             País:\n

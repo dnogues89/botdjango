@@ -2,9 +2,9 @@ from django.db import models
 
 # Create your models here.
 class Key(models.Model):
-    name = models.CharField(max_length=50)
-    url=models.CharField(max_length=100)
-    token=models.CharField(max_length=500)
+    name = models.CharField(max_length=50,help_text="Poner wap, para token de meli, sales para salesforce")
+    url=models.CharField(max_length=100,help_text="Url de WAP, o 3 siglas de origen salesforce")
+    token=models.CharField(max_length=500,help_text="Va el token de wap, o el concesionario")
     id_wap = models.CharField(max_length=100, null=True, blank=True)
 
 
