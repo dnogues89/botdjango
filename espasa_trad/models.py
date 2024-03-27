@@ -28,7 +28,7 @@ class Cliente(models.Model):
     propuesta_crm = models.CharField(max_length=20, blank=True, null=True, default="")
     canal_contacto = models.CharField(max_length=100,blank=True,null=True, default='WAP')
     cant_contactos = models.IntegerField(default=0)
-    pub_meli = models.CharField(max_length=100,blank=True,null=True, default='')
+    # pub_meli = models.CharField(max_length=100,blank=True,null=True, default='')
     
     def __str__(self) -> str:
         return self.nombre

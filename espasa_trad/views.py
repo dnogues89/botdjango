@@ -83,7 +83,7 @@ class ChatFlow():
                     self.cliente.canal_contacto = self.mensaje.split('|')[0]
                 if 'mercadolibre.com.ar' in self.mensaje:
                     self.cliente.canal_contacto = 'Mercadolibre'
-                    self.cliente.pub_meli = self.mensaje.split('/MLA-')[0].split('-')[0]
+                    self.cliente.propuesta_crm = self.mensaje.split('/MLA-')[0].split('-')[0]
             except:
                 pass
         if self.flow.flow_id == 1:
