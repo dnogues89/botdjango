@@ -7,6 +7,10 @@ class Key(models.Model):
     token=models.CharField(max_length=500,help_text="Va el token de wap, o el concesionario")
     id_wap = models.CharField(max_length=100, null=True, blank=True)
 
+    def __str__(self) -> str:
+        return self.name
+    
+
 
 class Error(models.Model):
     error = models.TextField()
