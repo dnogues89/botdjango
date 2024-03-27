@@ -56,7 +56,7 @@ class ChatFlow():
             1:self.validate_numero(len(self.mensaje),30), #Reviso el nombre, te pido el mail
             2:self.validate_mail(self.mensaje), #Reviso mail te mando a confirmacion
             3:self.validate_numero(self.mensaje,2),#Recibo opcion 1 o 2 confirmo datos, te mando a elegir canal
-            4:self.validate_numero(len(self.mensaje),7),# Entras canal tradicional te pongo las opciones de autos
+            4:self.validate_numero(self.mensaje,3),# Entras canal tradicional te pongo las opciones de autos
             5:self.validate_numero(len(self.mensaje),50),# te pido la consulta te cargo en crm, te mando a fila
             100:True, #Ya te conozco, te pido confirmar los datos
             50:True, #COla de espera
