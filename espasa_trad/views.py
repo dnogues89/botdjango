@@ -94,14 +94,16 @@ class ChatFlow():
                 self.cliente.flow = 0
                 self.flow = Flow.objects.get(flow_id=0)
         if self.flow.flow_id == 4:
-            self.cliente.canal = self.mensaje
+            self.cliente.canal = "Trad"
             #elegiste taller
             if str(self.mensaje)=='3':
                 self.cliente.flow = 33
+                self.cliente.canal = "Taller"
                 self.flow = Flow.objects.get(flow_id=33)
             #elegiste planes
             if str(self.mensaje)=='2':
                 self.cliente.flow = 32
+                self.cliente.canal = "AA"
                 self.flow = Flow.objects.get(flow_id=32)
                 send_crm = LeadAA(self.cliente)
                 self.cliente.cant_contactos = int(self.cliente.cant_contactos)+1
@@ -241,7 +243,7 @@ def clientes_abandonados(request):
     clientes_filtrados = clientes.filter(contacto__lte=limit)
     
     for cliente in clientes_filtrados:
-        cliente.flow = 30
+        cliente.flow = 100
         cliente.comentario = 'Sin Comentario'
         cliente.save()
     
@@ -258,7 +260,7 @@ def clientes_abandonados(request):
         if cliente.email == 'sin@email.com':
             cliente.flow=0
         else:
-            cliente.flow = 30
+            cliente.flow = 100
         cliente.cant_contactos = int(cliente.cant_contactos)+1
         cliente.save()
     
