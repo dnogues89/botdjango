@@ -10,8 +10,8 @@ class MensajesRecibidosAdmin(admin.ModelAdmin):
     list_display=('telefono_cliente','mensaje','creado','id_wa')
 
 class ClienteAdmin(admin.ModelAdmin):
-    list_display=('nombre','telefono','email','flow','contacto','cant_contactos','canal_contacto')
-    search_fields = ['nombre','telefono','email']
+    list_display=('nombre','telefono','email','flow','contacto','cant_contactos','canal_contacto','modelo','comentario','propuesta_crm')
+    search_fields = ['nombre','telefono','email','propuesta_crm']
     date_hierarchy = 'contacto'
     ordering = ('-contacto',)
 
