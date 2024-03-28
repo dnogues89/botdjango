@@ -112,7 +112,7 @@ class LeadAA():
 
           },
 
-          "service": "Espasa Landing"
+          "service": "Espasa Tradicional"
 
       },
 
