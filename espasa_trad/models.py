@@ -25,7 +25,7 @@ class Cliente(models.Model):
     canal = models.CharField(max_length=50, blank=True,null=True)
     comentario = models.CharField(max_length=1000,blank=True,null=True,default='Sin Comentario')
     contacto = models.DateTimeField(auto_now=True)
-    propuesta_crm = models.CharField(max_length=20, blank=True, null=True, default="")
+    propuesta_crm = models.CharField(max_length=20, blank=True, null=True, default="",verbose_name='Pub Meli')
     canal_contacto = models.CharField(max_length=100,blank=True,null=True, default='WAP')
     cant_contactos = models.IntegerField(default=0)
     # pub_meli = models.CharField(max_length=100,blank=True,null=True, default='')
